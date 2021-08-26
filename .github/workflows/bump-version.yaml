@@ -9,9 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Tag
-        uses: ChorusOne/semver-release-action@workaround-for-org-errors
+      - uses: zwaldowski/semver-release-action@v1
         with:
-          release_branch: main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          bump: minor
+          github_token: ${{ secrets.GITHUB_TOKEN }}
