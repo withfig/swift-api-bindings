@@ -112,12 +112,21 @@ public struct Fig_ClientOriginatedMessage {
     set {submessage = .ptyRequest(newValue)}
   }
 
+  public var pseudoterminalWriteRequest: Fig_PseudoterminalWriteRequest {
+    get {
+      if case .pseudoterminalWriteRequest(let v)? = submessage {return v}
+      return Fig_PseudoterminalWriteRequest()
+    }
+    set {submessage = .pseudoterminalWriteRequest(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Submessage: Equatable {
     case getBufferRequest(Fig_GetBufferRequest)
     case positionWindowRequest(Fig_PositionWindowRequest)
     case ptyRequest(Fig_PseudoterminalExecuteRequest)
+    case pseudoterminalWriteRequest(Fig_PseudoterminalWriteRequest)
 
   #if !swift(>=4.1)
     public static func ==(lhs: Fig_ClientOriginatedMessage.OneOf_Submessage, rhs: Fig_ClientOriginatedMessage.OneOf_Submessage) -> Bool {
@@ -135,6 +144,10 @@ public struct Fig_ClientOriginatedMessage {
       }()
       case (.ptyRequest, .ptyRequest): return {
         guard case .ptyRequest(let l) = lhs, case .ptyRequest(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.pseudoterminalWriteRequest, .pseudoterminalWriteRequest): return {
+        guard case .pseudoterminalWriteRequest(let l) = lhs, case .pseudoterminalWriteRequest(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -556,6 +569,7 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     100: .standard(proto: "get_buffer_request"),
     101: .standard(proto: "position_window_request"),
     102: .standard(proto: "pty_request"),
+    103: .standard(proto: "pseudoterminal_write_request"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -604,6 +618,19 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
           self.submessage = .ptyRequest(v)
         }
       }()
+      case 103: try {
+        var v: Fig_PseudoterminalWriteRequest?
+        var hadOneofValue = false
+        if let current = self.submessage {
+          hadOneofValue = true
+          if case .pseudoterminalWriteRequest(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.submessage = .pseudoterminalWriteRequest(v)
+        }
+      }()
       default: break
       }
     }
@@ -628,6 +655,10 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     case .ptyRequest?: try {
       guard case .ptyRequest(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 102)
+    }()
+    case .pseudoterminalWriteRequest?: try {
+      guard case .pseudoterminalWriteRequest(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 103)
     }()
     case nil: break
     }
