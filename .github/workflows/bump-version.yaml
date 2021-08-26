@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Tag
-        uses: K-Phoen/semver-release-action@v1.2.0
+        uses: ChorusOne/semver-release-action@workaround-for-org-errors
         with:
           release_branch: main
         env:
