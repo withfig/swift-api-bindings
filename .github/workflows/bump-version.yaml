@@ -13,4 +13,5 @@ jobs:
         with:
           bump: minor
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
