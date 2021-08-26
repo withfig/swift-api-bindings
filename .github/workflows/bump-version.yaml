@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-     - name: Tag
+      - name: Tag
         uses: K-Phoen/semver-release-action@v1.2.0
         with:
           release_branch: main
