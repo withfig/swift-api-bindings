@@ -182,6 +182,14 @@ struct Fig_ServerOriginatedMessage {
     set {submessage = .positionWindowResponse(newValue)}
   }
 
+  var pseudoterminalExecuteResponse: Fig_PseudoterminalExecuteResponse {
+    get {
+      if case .pseudoterminalExecuteResponse(let v)? = submessage {return v}
+      return Fig_PseudoterminalExecuteResponse()
+    }
+    set {submessage = .pseudoterminalExecuteResponse(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// Responses to ClientOriginatedMessages of the corresponding type
@@ -189,6 +197,7 @@ struct Fig_ServerOriginatedMessage {
     /// Set if request was malformed
     case error(String)
     case positionWindowResponse(Fig_PositionWindowResponse)
+    case pseudoterminalExecuteResponse(Fig_PseudoterminalExecuteResponse)
 
   #if !swift(>=4.1)
     static func ==(lhs: Fig_ServerOriginatedMessage.OneOf_Submessage, rhs: Fig_ServerOriginatedMessage.OneOf_Submessage) -> Bool {
@@ -202,6 +211,10 @@ struct Fig_ServerOriginatedMessage {
       }()
       case (.positionWindowResponse, .positionWindowResponse): return {
         guard case .positionWindowResponse(let l) = lhs, case .positionWindowResponse(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.pseudoterminalExecuteResponse, .pseudoterminalExecuteResponse): return {
+        guard case .pseudoterminalExecuteResponse(let l) = lhs, case .pseudoterminalExecuteResponse(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -310,6 +323,39 @@ struct Fig_PseudoterminalExecuteRequest {
   fileprivate var _workingDirectory: String? = nil
   fileprivate var _backgroundJob: Bool? = nil
   fileprivate var _isPipelined: Bool? = nil
+}
+
+struct Fig_PseudoterminalExecuteResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var stdout: String = String()
+
+  var stderr: String {
+    get {return _stderr ?? String()}
+    set {_stderr = newValue}
+  }
+  /// Returns true if `stderr` has been explicitly set.
+  var hasStderr: Bool {return self._stderr != nil}
+  /// Clears the value of `stderr`. Subsequent reads from it will return its default value.
+  mutating func clearStderr() {self._stderr = nil}
+
+  var exitCode: Int32 {
+    get {return _exitCode ?? 0}
+    set {_exitCode = newValue}
+  }
+  /// Returns true if `exitCode` has been explicitly set.
+  var hasExitCode: Bool {return self._exitCode != nil}
+  /// Clears the value of `exitCode`. Subsequent reads from it will return its default value.
+  mutating func clearExitCode() {self._exitCode = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _stderr: String? = nil
+  fileprivate var _exitCode: Int32? = nil
 }
 
 struct Fig_EnvironmentVariable {
@@ -601,7 +647,8 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
     2: .same(proto: "error"),
-    200: .standard(proto: "position_window_response"),
+    100: .standard(proto: "position_window_response"),
+    101: .standard(proto: "pseudoterminal_execute_response"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -619,7 +666,7 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
           self.submessage = .error(v)
         }
       }()
-      case 200: try {
+      case 100: try {
         var v: Fig_PositionWindowResponse?
         var hadOneofValue = false
         if let current = self.submessage {
@@ -630,6 +677,19 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
           self.submessage = .positionWindowResponse(v)
+        }
+      }()
+      case 101: try {
+        var v: Fig_PseudoterminalExecuteResponse?
+        var hadOneofValue = false
+        if let current = self.submessage {
+          hadOneofValue = true
+          if case .pseudoterminalExecuteResponse(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.submessage = .pseudoterminalExecuteResponse(v)
         }
       }()
       default: break
@@ -651,7 +711,11 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     }()
     case .positionWindowResponse?: try {
       guard case .positionWindowResponse(let v)? = self.submessage else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 200)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
+    }()
+    case .pseudoterminalExecuteResponse?: try {
+      guard case .pseudoterminalExecuteResponse(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
     }()
     case nil: break
     }
@@ -776,6 +840,50 @@ extension Fig_PseudoterminalExecuteRequest: SwiftProtobuf.Message, SwiftProtobuf
     if lhs._backgroundJob != rhs._backgroundJob {return false}
     if lhs._isPipelined != rhs._isPipelined {return false}
     if lhs.env != rhs.env {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Fig_PseudoterminalExecuteResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".PseudoterminalExecuteResponse"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "stdout"),
+    2: .same(proto: "stderr"),
+    3: .same(proto: "exitCode"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.stdout) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self._stderr) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self._exitCode) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.stdout.isEmpty {
+      try visitor.visitSingularStringField(value: self.stdout, fieldNumber: 1)
+    }
+    if let v = self._stderr {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    }
+    if let v = self._exitCode {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Fig_PseudoterminalExecuteResponse, rhs: Fig_PseudoterminalExecuteResponse) -> Bool {
+    if lhs.stdout != rhs.stdout {return false}
+    if lhs._stderr != rhs._stderr {return false}
+    if lhs._exitCode != rhs._exitCode {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
