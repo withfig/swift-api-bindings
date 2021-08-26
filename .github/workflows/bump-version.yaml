@@ -14,6 +14,7 @@ jobs:
         uses: zendesk/action-create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag_schema: semantic
       # - uses: zwaldowski/semver-release-action@v1
       #   with:
       #     bump: patch
