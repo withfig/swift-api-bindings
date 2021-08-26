@@ -20,8 +20,8 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-enum Fig_Anchor: SwiftProtobuf.Enum {
-  typealias RawValue = Int
+public enum Fig_Anchor: SwiftProtobuf.Enum {
+  public typealias RawValue = Int
   case cursor // = 0
   case leftEdge // = 1
   case rightEdge // = 2
@@ -29,11 +29,11 @@ enum Fig_Anchor: SwiftProtobuf.Enum {
   case bottomEdge // = 4
   case UNRECOGNIZED(Int)
 
-  init() {
+  public init() {
     self = .cursor
   }
 
-  init?(rawValue: Int) {
+  public init?(rawValue: Int) {
     switch rawValue {
     case 0: self = .cursor
     case 1: self = .leftEdge
@@ -44,7 +44,7 @@ enum Fig_Anchor: SwiftProtobuf.Enum {
     }
   }
 
-  var rawValue: Int {
+  public var rawValue: Int {
     switch self {
     case .cursor: return 0
     case .leftEdge: return 1
@@ -61,7 +61,7 @@ enum Fig_Anchor: SwiftProtobuf.Enum {
 
 extension Fig_Anchor: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static var allCases: [Fig_Anchor] = [
+  public static var allCases: [Fig_Anchor] = [
     .cursor,
     .leftEdge,
     .rightEdge,
@@ -72,23 +72,23 @@ extension Fig_Anchor: CaseIterable {
 
 #endif  // swift(>=4.2)
 
-struct Fig_ClientOriginatedMessage {
+public struct Fig_ClientOriginatedMessage {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var id: Int64 {
+  public var id: Int64 {
     get {return _id ?? 0}
     set {_id = newValue}
   }
   /// Returns true if `id` has been explicitly set.
-  var hasID: Bool {return self._id != nil}
+  public var hasID: Bool {return self._id != nil}
   /// Clears the value of `id`. Subsequent reads from it will return its default value.
-  mutating func clearID() {self._id = nil}
+  public mutating func clearID() {self._id = nil}
 
-  var submessage: Fig_ClientOriginatedMessage.OneOf_Submessage? = nil
+  public var submessage: Fig_ClientOriginatedMessage.OneOf_Submessage? = nil
 
-  var getBufferRequest: Fig_GetBufferRequest {
+  public var getBufferRequest: Fig_GetBufferRequest {
     get {
       if case .getBufferRequest(let v)? = submessage {return v}
       return Fig_GetBufferRequest()
@@ -96,7 +96,7 @@ struct Fig_ClientOriginatedMessage {
     set {submessage = .getBufferRequest(newValue)}
   }
 
-  var positionWindowRequest: Fig_PositionWindowRequest {
+  public var positionWindowRequest: Fig_PositionWindowRequest {
     get {
       if case .positionWindowRequest(let v)? = submessage {return v}
       return Fig_PositionWindowRequest()
@@ -104,7 +104,7 @@ struct Fig_ClientOriginatedMessage {
     set {submessage = .positionWindowRequest(newValue)}
   }
 
-  var ptyRequest: Fig_PseudoterminalExecuteRequest {
+  public var ptyRequest: Fig_PseudoterminalExecuteRequest {
     get {
       if case .ptyRequest(let v)? = submessage {return v}
       return Fig_PseudoterminalExecuteRequest()
@@ -112,15 +112,15 @@ struct Fig_ClientOriginatedMessage {
     set {submessage = .ptyRequest(newValue)}
   }
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  enum OneOf_Submessage: Equatable {
+  public enum OneOf_Submessage: Equatable {
     case getBufferRequest(Fig_GetBufferRequest)
     case positionWindowRequest(Fig_PositionWindowRequest)
     case ptyRequest(Fig_PseudoterminalExecuteRequest)
 
   #if !swift(>=4.1)
-    static func ==(lhs: Fig_ClientOriginatedMessage.OneOf_Submessage, rhs: Fig_ClientOriginatedMessage.OneOf_Submessage) -> Bool {
+    public static func ==(lhs: Fig_ClientOriginatedMessage.OneOf_Submessage, rhs: Fig_ClientOriginatedMessage.OneOf_Submessage) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -143,30 +143,30 @@ struct Fig_ClientOriginatedMessage {
   #endif
   }
 
-  init() {}
+  public init() {}
 
   fileprivate var _id: Int64? = nil
 }
 
-struct Fig_ServerOriginatedMessage {
+public struct Fig_ServerOriginatedMessage {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var id: Int64 {
+  public var id: Int64 {
     get {return _id ?? 0}
     set {_id = newValue}
   }
   /// Returns true if `id` has been explicitly set.
-  var hasID: Bool {return self._id != nil}
+  public var hasID: Bool {return self._id != nil}
   /// Clears the value of `id`. Subsequent reads from it will return its default value.
-  mutating func clearID() {self._id = nil}
+  public mutating func clearID() {self._id = nil}
 
   /// Responses to ClientOriginatedMessages of the corresponding type
-  var submessage: Fig_ServerOriginatedMessage.OneOf_Submessage? = nil
+  public var submessage: Fig_ServerOriginatedMessage.OneOf_Submessage? = nil
 
   /// Set if request was malformed
-  var error: String {
+  public var error: String {
     get {
       if case .error(let v)? = submessage {return v}
       return String()
@@ -174,7 +174,7 @@ struct Fig_ServerOriginatedMessage {
     set {submessage = .error(newValue)}
   }
 
-  var positionWindowResponse: Fig_PositionWindowResponse {
+  public var positionWindowResponse: Fig_PositionWindowResponse {
     get {
       if case .positionWindowResponse(let v)? = submessage {return v}
       return Fig_PositionWindowResponse()
@@ -182,7 +182,7 @@ struct Fig_ServerOriginatedMessage {
     set {submessage = .positionWindowResponse(newValue)}
   }
 
-  var pseudoterminalExecuteResponse: Fig_PseudoterminalExecuteResponse {
+  public var pseudoterminalExecuteResponse: Fig_PseudoterminalExecuteResponse {
     get {
       if case .pseudoterminalExecuteResponse(let v)? = submessage {return v}
       return Fig_PseudoterminalExecuteResponse()
@@ -190,17 +190,17 @@ struct Fig_ServerOriginatedMessage {
     set {submessage = .pseudoterminalExecuteResponse(newValue)}
   }
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// Responses to ClientOriginatedMessages of the corresponding type
-  enum OneOf_Submessage: Equatable {
+  public enum OneOf_Submessage: Equatable {
     /// Set if request was malformed
     case error(String)
     case positionWindowResponse(Fig_PositionWindowResponse)
     case pseudoterminalExecuteResponse(Fig_PseudoterminalExecuteResponse)
 
   #if !swift(>=4.1)
-    static func ==(lhs: Fig_ServerOriginatedMessage.OneOf_Submessage, rhs: Fig_ServerOriginatedMessage.OneOf_Submessage) -> Bool {
+    public static func ==(lhs: Fig_ServerOriginatedMessage.OneOf_Submessage, rhs: Fig_ServerOriginatedMessage.OneOf_Submessage) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -223,19 +223,19 @@ struct Fig_ServerOriginatedMessage {
   #endif
   }
 
-  init() {}
+  public init() {}
 
   fileprivate var _id: Int64? = nil
 }
 
-struct Fig_PseudoterminalWriteRequest {
+public struct Fig_PseudoterminalWriteRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var input: Fig_PseudoterminalWriteRequest.OneOf_Input? = nil
+  public var input: Fig_PseudoterminalWriteRequest.OneOf_Input? = nil
 
-  var text: String {
+  public var text: String {
     get {
       if case .text(let v)? = input {return v}
       return String()
@@ -243,7 +243,7 @@ struct Fig_PseudoterminalWriteRequest {
     set {input = .text(newValue)}
   }
 
-  var octal: String {
+  public var octal: String {
     get {
       if case .octal(let v)? = input {return v}
       return String()
@@ -251,14 +251,14 @@ struct Fig_PseudoterminalWriteRequest {
     set {input = .octal(newValue)}
   }
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  enum OneOf_Input: Equatable {
+  public enum OneOf_Input: Equatable {
     case text(String)
     case octal(String)
 
   #if !swift(>=4.1)
-    static func ==(lhs: Fig_PseudoterminalWriteRequest.OneOf_Input, rhs: Fig_PseudoterminalWriteRequest.OneOf_Input) -> Bool {
+    public static func ==(lhs: Fig_PseudoterminalWriteRequest.OneOf_Input, rhs: Fig_PseudoterminalWriteRequest.OneOf_Input) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -277,260 +277,260 @@ struct Fig_PseudoterminalWriteRequest {
   #endif
   }
 
-  init() {}
+  public init() {}
 }
 
-struct Fig_PseudoterminalExecuteRequest {
+public struct Fig_PseudoterminalExecuteRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var command: String = String()
+  public var command: String = String()
 
-  var workingDirectory: String {
+  public var workingDirectory: String {
     get {return _workingDirectory ?? String()}
     set {_workingDirectory = newValue}
   }
   /// Returns true if `workingDirectory` has been explicitly set.
-  var hasWorkingDirectory: Bool {return self._workingDirectory != nil}
+  public var hasWorkingDirectory: Bool {return self._workingDirectory != nil}
   /// Clears the value of `workingDirectory`. Subsequent reads from it will return its default value.
-  mutating func clearWorkingDirectory() {self._workingDirectory = nil}
+  public mutating func clearWorkingDirectory() {self._workingDirectory = nil}
 
-  var backgroundJob: Bool {
+  public var backgroundJob: Bool {
     get {return _backgroundJob ?? false}
     set {_backgroundJob = newValue}
   }
   /// Returns true if `backgroundJob` has been explicitly set.
-  var hasBackgroundJob: Bool {return self._backgroundJob != nil}
+  public var hasBackgroundJob: Bool {return self._backgroundJob != nil}
   /// Clears the value of `backgroundJob`. Subsequent reads from it will return its default value.
-  mutating func clearBackgroundJob() {self._backgroundJob = nil}
+  public mutating func clearBackgroundJob() {self._backgroundJob = nil}
 
-  var isPipelined: Bool {
+  public var isPipelined: Bool {
     get {return _isPipelined ?? false}
     set {_isPipelined = newValue}
   }
   /// Returns true if `isPipelined` has been explicitly set.
-  var hasIsPipelined: Bool {return self._isPipelined != nil}
+  public var hasIsPipelined: Bool {return self._isPipelined != nil}
   /// Clears the value of `isPipelined`. Subsequent reads from it will return its default value.
-  mutating func clearIsPipelined() {self._isPipelined = nil}
+  public mutating func clearIsPipelined() {self._isPipelined = nil}
 
-  var env: [Fig_EnvironmentVariable] = []
+  public var env: [Fig_EnvironmentVariable] = []
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _workingDirectory: String? = nil
   fileprivate var _backgroundJob: Bool? = nil
   fileprivate var _isPipelined: Bool? = nil
 }
 
-struct Fig_PseudoterminalExecuteResponse {
+public struct Fig_PseudoterminalExecuteResponse {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var stdout: String = String()
+  public var stdout: String = String()
 
-  var stderr: String {
+  public var stderr: String {
     get {return _stderr ?? String()}
     set {_stderr = newValue}
   }
   /// Returns true if `stderr` has been explicitly set.
-  var hasStderr: Bool {return self._stderr != nil}
+  public var hasStderr: Bool {return self._stderr != nil}
   /// Clears the value of `stderr`. Subsequent reads from it will return its default value.
-  mutating func clearStderr() {self._stderr = nil}
+  public mutating func clearStderr() {self._stderr = nil}
 
-  var exitCode: Int32 {
+  public var exitCode: Int32 {
     get {return _exitCode ?? 0}
     set {_exitCode = newValue}
   }
   /// Returns true if `exitCode` has been explicitly set.
-  var hasExitCode: Bool {return self._exitCode != nil}
+  public var hasExitCode: Bool {return self._exitCode != nil}
   /// Clears the value of `exitCode`. Subsequent reads from it will return its default value.
-  mutating func clearExitCode() {self._exitCode = nil}
+  public mutating func clearExitCode() {self._exitCode = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _stderr: String? = nil
   fileprivate var _exitCode: Int32? = nil
 }
 
-struct Fig_EnvironmentVariable {
+public struct Fig_EnvironmentVariable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var key: String = String()
+  public var key: String = String()
 
-  var value: String {
+  public var value: String {
     get {return _value ?? String()}
     set {_value = newValue}
   }
   /// Returns true if `value` has been explicitly set.
-  var hasValue: Bool {return self._value != nil}
+  public var hasValue: Bool {return self._value != nil}
   /// Clears the value of `value`. Subsequent reads from it will return its default value.
-  mutating func clearValue() {self._value = nil}
+  public mutating func clearValue() {self._value = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _value: String? = nil
 }
 
-struct Fig_PositionWindowRequest {
+public struct Fig_PositionWindowRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var anchor: Fig_Point {
+  public var anchor: Fig_Point {
     get {return _anchor ?? Fig_Point()}
     set {_anchor = newValue}
   }
   /// Returns true if `anchor` has been explicitly set.
-  var hasAnchor: Bool {return self._anchor != nil}
+  public var hasAnchor: Bool {return self._anchor != nil}
   /// Clears the value of `anchor`. Subsequent reads from it will return its default value.
-  mutating func clearAnchor() {self._anchor = nil}
+  public mutating func clearAnchor() {self._anchor = nil}
 
-  var size: Fig_Size {
+  public var size: Fig_Size {
     get {return _size ?? Fig_Size()}
     set {_size = newValue}
   }
   /// Returns true if `size` has been explicitly set.
-  var hasSize: Bool {return self._size != nil}
+  public var hasSize: Bool {return self._size != nil}
   /// Clears the value of `size`. Subsequent reads from it will return its default value.
-  mutating func clearSize() {self._size = nil}
+  public mutating func clearSize() {self._size = nil}
 
-  var dryrun: Bool {
+  public var dryrun: Bool {
     get {return _dryrun ?? false}
     set {_dryrun = newValue}
   }
   /// Returns true if `dryrun` has been explicitly set.
-  var hasDryrun: Bool {return self._dryrun != nil}
+  public var hasDryrun: Bool {return self._dryrun != nil}
   /// Clears the value of `dryrun`. Subsequent reads from it will return its default value.
-  mutating func clearDryrun() {self._dryrun = nil}
+  public mutating func clearDryrun() {self._dryrun = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _anchor: Fig_Point? = nil
   fileprivate var _size: Fig_Size? = nil
   fileprivate var _dryrun: Bool? = nil
 }
 
-struct Fig_PositionWindowResponse {
+public struct Fig_PositionWindowResponse {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var isAbove: Bool {
+  public var isAbove: Bool {
     get {return _isAbove ?? false}
     set {_isAbove = newValue}
   }
   /// Returns true if `isAbove` has been explicitly set.
-  var hasIsAbove: Bool {return self._isAbove != nil}
+  public var hasIsAbove: Bool {return self._isAbove != nil}
   /// Clears the value of `isAbove`. Subsequent reads from it will return its default value.
-  mutating func clearIsAbove() {self._isAbove = nil}
+  public mutating func clearIsAbove() {self._isAbove = nil}
 
-  var isClipped: Bool {
+  public var isClipped: Bool {
     get {return _isClipped ?? false}
     set {_isClipped = newValue}
   }
   /// Returns true if `isClipped` has been explicitly set.
-  var hasIsClipped: Bool {return self._isClipped != nil}
+  public var hasIsClipped: Bool {return self._isClipped != nil}
   /// Clears the value of `isClipped`. Subsequent reads from it will return its default value.
-  mutating func clearIsClipped() {self._isClipped = nil}
+  public mutating func clearIsClipped() {self._isClipped = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _isAbove: Bool? = nil
   fileprivate var _isClipped: Bool? = nil
 }
 
-struct Fig_Point {
+public struct Fig_Point {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var x: Float = 0
+  public var x: Float = 0
 
-  var y: Float = 0
+  public var y: Float = 0
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 }
 
-struct Fig_Size {
+public struct Fig_Size {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var width: Float = 0
+  public var width: Float = 0
 
-  var height: Float = 0
+  public var height: Float = 0
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 }
 
-struct Fig_Frame {
+public struct Fig_Frame {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var origin: Fig_Point {
+  public var origin: Fig_Point {
     get {return _origin ?? Fig_Point()}
     set {_origin = newValue}
   }
   /// Returns true if `origin` has been explicitly set.
-  var hasOrigin: Bool {return self._origin != nil}
+  public var hasOrigin: Bool {return self._origin != nil}
   /// Clears the value of `origin`. Subsequent reads from it will return its default value.
-  mutating func clearOrigin() {self._origin = nil}
+  public mutating func clearOrigin() {self._origin = nil}
 
-  var size: Fig_Size {
+  public var size: Fig_Size {
     get {return _size ?? Fig_Size()}
     set {_size = newValue}
   }
   /// Returns true if `size` has been explicitly set.
-  var hasSize: Bool {return self._size != nil}
+  public var hasSize: Bool {return self._size != nil}
   /// Clears the value of `size`. Subsequent reads from it will return its default value.
-  mutating func clearSize() {self._size = nil}
+  public mutating func clearSize() {self._size = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _origin: Fig_Point? = nil
   fileprivate var _size: Fig_Size? = nil
 }
 
 /// Requests the contents of a range of lines.
-struct Fig_GetBufferRequest {
+public struct Fig_GetBufferRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// See documentation on session IDs. "all" not accepted.
-  var session: String {
+  public var session: String {
     get {return _session ?? String()}
     set {_session = newValue}
   }
   /// Returns true if `session` has been explicitly set.
-  var hasSession: Bool {return self._session != nil}
+  public var hasSession: Bool {return self._session != nil}
   /// Clears the value of `session`. Subsequent reads from it will return its default value.
-  mutating func clearSession() {self._session = nil}
+  public mutating func clearSession() {self._session = nil}
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  public init() {}
 
   fileprivate var _session: String? = nil
 }
@@ -540,7 +540,7 @@ struct Fig_GetBufferRequest {
 fileprivate let _protobuf_package = "fig"
 
 extension Fig_Anchor: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "CURSOR"),
     1: .same(proto: "LEFT_EDGE"),
     2: .same(proto: "RIGHT_EDGE"),
@@ -550,15 +550,15 @@ extension Fig_Anchor: SwiftProtobuf._ProtoNameProviding {
 }
 
 extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".ClientOriginatedMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = _protobuf_package + ".ClientOriginatedMessage"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
     100: .standard(proto: "get_buffer_request"),
     101: .standard(proto: "position_window_request"),
     102: .standard(proto: "pty_request"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -609,7 +609,7 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if let v = self._id {
       try visitor.visitSingularInt64Field(value: v, fieldNumber: 1)
     }
@@ -634,7 +634,7 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Fig_ClientOriginatedMessage, rhs: Fig_ClientOriginatedMessage) -> Bool {
+  public static func ==(lhs: Fig_ClientOriginatedMessage, rhs: Fig_ClientOriginatedMessage) -> Bool {
     if lhs._id != rhs._id {return false}
     if lhs.submessage != rhs.submessage {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -643,15 +643,15 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
 }
 
 extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".ServerOriginatedMessage"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = _protobuf_package + ".ServerOriginatedMessage"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
     2: .same(proto: "error"),
     100: .standard(proto: "position_window_response"),
     101: .standard(proto: "pseudoterminal_execute_response"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -697,7 +697,7 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if let v = self._id {
       try visitor.visitSingularInt64Field(value: v, fieldNumber: 1)
     }
@@ -722,7 +722,7 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Fig_ServerOriginatedMessage, rhs: Fig_ServerOriginatedMessage) -> Bool {
+  public static func ==(lhs: Fig_ServerOriginatedMessage, rhs: Fig_ServerOriginatedMessage) -> Bool {
     if lhs._id != rhs._id {return false}
     if lhs.submessage != rhs.submessage {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -731,13 +731,13 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
 }
 
 extension Fig_PseudoterminalWriteRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".PseudoterminalWriteRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = _protobuf_package + ".PseudoterminalWriteRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
     2: .same(proto: "octal"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -764,7 +764,7 @@ extension Fig_PseudoterminalWriteRequest: SwiftProtobuf.Message, SwiftProtobuf._
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every case branch when no optimizations are
     // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -782,7 +782,7 @@ extension Fig_PseudoterminalWriteRequest: SwiftProtobuf.Message, SwiftProtobuf._
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Fig_PseudoterminalWriteRequest, rhs: Fig_PseudoterminalWriteRequest) -> Bool {
+  public static func ==(lhs: Fig_PseudoterminalWriteRequest, rhs: Fig_PseudoterminalWriteRequest) -> Bool {
     if lhs.input != rhs.input {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -790,8 +790,8 @@ extension Fig_PseudoterminalWriteRequest: SwiftProtobuf.Message, SwiftProtobuf._
 }
 
 extension Fig_PseudoterminalExecuteRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".PseudoterminalExecuteRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = _protobuf_package + ".PseudoterminalExecuteRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "command"),
     2: .same(proto: "workingDirectory"),
     3: .same(proto: "backgroundJob"),
@@ -799,7 +799,7 @@ extension Fig_PseudoterminalExecuteRequest: SwiftProtobuf.Message, SwiftProtobuf
     5: .same(proto: "env"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -815,7 +815,7 @@ extension Fig_PseudoterminalExecuteRequest: SwiftProtobuf.Message, SwiftProtobuf
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.command.isEmpty {
       try visitor.visitSingularStringField(value: self.command, fieldNumber: 1)
     }
@@ -834,7 +834,7 @@ extension Fig_PseudoterminalExecuteRequest: SwiftProtobuf.Message, SwiftProtobuf
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Fig_PseudoterminalExecuteRequest, rhs: Fig_PseudoterminalExecuteRequest) -> Bool {
+  public static func ==(lhs: Fig_PseudoterminalExecuteRequest, rhs: Fig_PseudoterminalExecuteRequest) -> Bool {
     if lhs.command != rhs.command {return false}
     if lhs._workingDirectory != rhs._workingDirectory {return false}
     if lhs._backgroundJob != rhs._backgroundJob {return false}
@@ -846,14 +846,14 @@ extension Fig_PseudoterminalExecuteRequest: SwiftProtobuf.Message, SwiftProtobuf
 }
 
 extension Fig_PseudoterminalExecuteResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".PseudoterminalExecuteResponse"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = _protobuf_package + ".PseudoterminalExecuteResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "stdout"),
     2: .same(proto: "stderr"),
     3: .same(proto: "exitCode"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -867,7 +867,7 @@ extension Fig_PseudoterminalExecuteResponse: SwiftProtobuf.Message, SwiftProtobu
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.stdout.isEmpty {
       try visitor.visitSingularStringField(value: self.stdout, fieldNumber: 1)
     }
@@ -880,7 +880,7 @@ extension Fig_PseudoterminalExecuteResponse: SwiftProtobuf.Message, SwiftProtobu
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Fig_PseudoterminalExecuteResponse, rhs: Fig_PseudoterminalExecuteResponse) -> Bool {
+  public static func ==(lhs: Fig_PseudoterminalExecuteResponse, rhs: Fig_PseudoterminalExecuteResponse) -> Bool {
     if lhs.stdout != rhs.stdout {return false}
     if lhs._stderr != rhs._stderr {return false}
     if lhs._exitCode != rhs._exitCode {return false}
@@ -890,13 +890,13 @@ extension Fig_PseudoterminalExecuteResponse: SwiftProtobuf.Message, SwiftProtobu
 }
 
 extension Fig_EnvironmentVariable: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".EnvironmentVariable"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = _protobuf_package + ".EnvironmentVariable"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "key"),
     2: .same(proto: "value"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -909,7 +909,7 @@ extension Fig_EnvironmentVariable: SwiftProtobuf.Message, SwiftProtobuf._Message
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.key.isEmpty {
       try visitor.visitSingularStringField(value: self.key, fieldNumber: 1)
     }
@@ -919,7 +919,7 @@ extension Fig_EnvironmentVariable: SwiftProtobuf.Message, SwiftProtobuf._Message
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Fig_EnvironmentVariable, rhs: Fig_EnvironmentVariable) -> Bool {
+  public static func ==(lhs: Fig_EnvironmentVariable, rhs: Fig_EnvironmentVariable) -> Bool {
     if lhs.key != rhs.key {return false}
     if lhs._value != rhs._value {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -928,14 +928,14 @@ extension Fig_EnvironmentVariable: SwiftProtobuf.Message, SwiftProtobuf._Message
 }
 
 extension Fig_PositionWindowRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".PositionWindowRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = _protobuf_package + ".PositionWindowRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "anchor"),
     2: .same(proto: "size"),
     3: .same(proto: "dryrun"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -949,7 +949,7 @@ extension Fig_PositionWindowRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if let v = self._anchor {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }
@@ -962,7 +962,7 @@ extension Fig_PositionWindowRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Fig_PositionWindowRequest, rhs: Fig_PositionWindowRequest) -> Bool {
+  public static func ==(lhs: Fig_PositionWindowRequest, rhs: Fig_PositionWindowRequest) -> Bool {
     if lhs._anchor != rhs._anchor {return false}
     if lhs._size != rhs._size {return false}
     if lhs._dryrun != rhs._dryrun {return false}
@@ -972,13 +972,13 @@ extension Fig_PositionWindowRequest: SwiftProtobuf.Message, SwiftProtobuf._Messa
 }
 
 extension Fig_PositionWindowResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".PositionWindowResponse"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = _protobuf_package + ".PositionWindowResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "isAbove"),
     2: .same(proto: "isClipped"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -991,7 +991,7 @@ extension Fig_PositionWindowResponse: SwiftProtobuf.Message, SwiftProtobuf._Mess
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if let v = self._isAbove {
       try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
     }
@@ -1001,7 +1001,7 @@ extension Fig_PositionWindowResponse: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Fig_PositionWindowResponse, rhs: Fig_PositionWindowResponse) -> Bool {
+  public static func ==(lhs: Fig_PositionWindowResponse, rhs: Fig_PositionWindowResponse) -> Bool {
     if lhs._isAbove != rhs._isAbove {return false}
     if lhs._isClipped != rhs._isClipped {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -1010,13 +1010,13 @@ extension Fig_PositionWindowResponse: SwiftProtobuf.Message, SwiftProtobuf._Mess
 }
 
 extension Fig_Point: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".Point"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = _protobuf_package + ".Point"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "x"),
     2: .same(proto: "y"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -1029,7 +1029,7 @@ extension Fig_Point: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if self.x != 0 {
       try visitor.visitSingularFloatField(value: self.x, fieldNumber: 1)
     }
@@ -1039,7 +1039,7 @@ extension Fig_Point: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Fig_Point, rhs: Fig_Point) -> Bool {
+  public static func ==(lhs: Fig_Point, rhs: Fig_Point) -> Bool {
     if lhs.x != rhs.x {return false}
     if lhs.y != rhs.y {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -1048,13 +1048,13 @@ extension Fig_Point: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
 }
 
 extension Fig_Size: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".Size"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = _protobuf_package + ".Size"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "width"),
     2: .same(proto: "height"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -1067,7 +1067,7 @@ extension Fig_Size: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if self.width != 0 {
       try visitor.visitSingularFloatField(value: self.width, fieldNumber: 1)
     }
@@ -1077,7 +1077,7 @@ extension Fig_Size: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Fig_Size, rhs: Fig_Size) -> Bool {
+  public static func ==(lhs: Fig_Size, rhs: Fig_Size) -> Bool {
     if lhs.width != rhs.width {return false}
     if lhs.height != rhs.height {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -1086,13 +1086,13 @@ extension Fig_Size: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
 }
 
 extension Fig_Frame: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".Frame"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = _protobuf_package + ".Frame"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "origin"),
     2: .same(proto: "size"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -1105,7 +1105,7 @@ extension Fig_Frame: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if let v = self._origin {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }
@@ -1115,7 +1115,7 @@ extension Fig_Frame: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Fig_Frame, rhs: Fig_Frame) -> Bool {
+  public static func ==(lhs: Fig_Frame, rhs: Fig_Frame) -> Bool {
     if lhs._origin != rhs._origin {return false}
     if lhs._size != rhs._size {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -1124,12 +1124,12 @@ extension Fig_Frame: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
 }
 
 extension Fig_GetBufferRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GetBufferRequest"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  public static let protoMessageName: String = _protobuf_package + ".GetBufferRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "session"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -1141,14 +1141,14 @@ extension Fig_GetBufferRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if let v = self._session {
       try visitor.visitSingularStringField(value: v, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Fig_GetBufferRequest, rhs: Fig_GetBufferRequest) -> Bool {
+  public static func ==(lhs: Fig_GetBufferRequest, rhs: Fig_GetBufferRequest) -> Bool {
     if lhs._session != rhs._session {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
