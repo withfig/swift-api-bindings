@@ -601,7 +601,7 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
     2: .same(proto: "error"),
-    200: .standard(proto: "position_window_response"),
+    100: .standard(proto: "position_window_response"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -619,7 +619,7 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
           self.submessage = .error(v)
         }
       }()
-      case 200: try {
+      case 100: try {
         var v: Fig_PositionWindowResponse?
         var hadOneofValue = false
         if let current = self.submessage {
@@ -651,7 +651,7 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     }()
     case .positionWindowResponse?: try {
       guard case .positionWindowResponse(let v)? = self.submessage else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 200)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
     }()
     case nil: break
     }
