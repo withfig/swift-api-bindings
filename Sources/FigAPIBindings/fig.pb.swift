@@ -208,13 +208,20 @@ public struct Fig_ServerOriginatedMessage {
   /// Responses to ClientOriginatedMessages of the corresponding type
   public var submessage: Fig_ServerOriginatedMessage.OneOf_Submessage? = nil
 
-  /// Set if request was malformed
   public var error: String {
     get {
       if case .error(let v)? = submessage {return v}
       return String()
     }
     set {submessage = .error(newValue)}
+  }
+
+  public var success: Bool {
+    get {
+      if case .success(let v)? = submessage {return v}
+      return false
+    }
+    set {submessage = .success(newValue)}
   }
 
   public var positionWindowResponse: Fig_PositionWindowResponse {
@@ -233,6 +240,22 @@ public struct Fig_ServerOriginatedMessage {
     set {submessage = .pseudoterminalExecuteResponse(newValue)}
   }
 
+  public var readFileResponse: Fig_ReadFileResponse {
+    get {
+      if case .readFileResponse(let v)? = submessage {return v}
+      return Fig_ReadFileResponse()
+    }
+    set {submessage = .readFileResponse(newValue)}
+  }
+
+  public var contentsOfDirectoryResponse: Fig_ContentsOfDirectoryResponse {
+    get {
+      if case .contentsOfDirectoryResponse(let v)? = submessage {return v}
+      return Fig_ContentsOfDirectoryResponse()
+    }
+    set {submessage = .contentsOfDirectoryResponse(newValue)}
+  }
+
   public var notification: Fig_Notification {
     get {
       if case .notification(let v)? = submessage {return v}
@@ -245,10 +268,12 @@ public struct Fig_ServerOriginatedMessage {
 
   /// Responses to ClientOriginatedMessages of the corresponding type
   public enum OneOf_Submessage: Equatable {
-    /// Set if request was malformed
     case error(String)
+    case success(Bool)
     case positionWindowResponse(Fig_PositionWindowResponse)
     case pseudoterminalExecuteResponse(Fig_PseudoterminalExecuteResponse)
+    case readFileResponse(Fig_ReadFileResponse)
+    case contentsOfDirectoryResponse(Fig_ContentsOfDirectoryResponse)
     case notification(Fig_Notification)
 
   #if !swift(>=4.1)
@@ -261,12 +286,24 @@ public struct Fig_ServerOriginatedMessage {
         guard case .error(let l) = lhs, case .error(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
+      case (.success, .success): return {
+        guard case .success(let l) = lhs, case .success(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
       case (.positionWindowResponse, .positionWindowResponse): return {
         guard case .positionWindowResponse(let l) = lhs, case .positionWindowResponse(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.pseudoterminalExecuteResponse, .pseudoterminalExecuteResponse): return {
         guard case .pseudoterminalExecuteResponse(let l) = lhs, case .pseudoterminalExecuteResponse(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.readFileResponse, .readFileResponse): return {
+        guard case .readFileResponse(let l) = lhs, case .readFileResponse(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.contentsOfDirectoryResponse, .contentsOfDirectoryResponse): return {
+        guard case .contentsOfDirectoryResponse(let l) = lhs, case .contentsOfDirectoryResponse(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.notification, .notification): return {
@@ -1442,8 +1479,11 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
     2: .same(proto: "error"),
+    3: .same(proto: "success"),
     100: .standard(proto: "position_window_response"),
     101: .standard(proto: "pseudoterminal_execute_response"),
+    102: .standard(proto: "read_file_response"),
+    103: .standard(proto: "contents_of_directory_response"),
     1000: .same(proto: "notification"),
   ]
 
@@ -1460,6 +1500,14 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
         if let v = v {
           if self.submessage != nil {try decoder.handleConflictingOneOf()}
           self.submessage = .error(v)
+        }
+      }()
+      case 3: try {
+        var v: Bool?
+        try decoder.decodeSingularBoolField(value: &v)
+        if let v = v {
+          if self.submessage != nil {try decoder.handleConflictingOneOf()}
+          self.submessage = .success(v)
         }
       }()
       case 100: try {
@@ -1486,6 +1534,32 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
           self.submessage = .pseudoterminalExecuteResponse(v)
+        }
+      }()
+      case 102: try {
+        var v: Fig_ReadFileResponse?
+        var hadOneofValue = false
+        if let current = self.submessage {
+          hadOneofValue = true
+          if case .readFileResponse(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.submessage = .readFileResponse(v)
+        }
+      }()
+      case 103: try {
+        var v: Fig_ContentsOfDirectoryResponse?
+        var hadOneofValue = false
+        if let current = self.submessage {
+          hadOneofValue = true
+          if case .contentsOfDirectoryResponse(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.submessage = .contentsOfDirectoryResponse(v)
         }
       }()
       case 1000: try {
@@ -1518,6 +1592,10 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
       guard case .error(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularStringField(value: v, fieldNumber: 2)
     }()
+    case .success?: try {
+      guard case .success(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 3)
+    }()
     case .positionWindowResponse?: try {
       guard case .positionWindowResponse(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
@@ -1525,6 +1603,14 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     case .pseudoterminalExecuteResponse?: try {
       guard case .pseudoterminalExecuteResponse(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
+    }()
+    case .readFileResponse?: try {
+      guard case .readFileResponse(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 102)
+    }()
+    case .contentsOfDirectoryResponse?: try {
+      guard case .contentsOfDirectoryResponse(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 103)
     }()
     case .notification?: try {
       guard case .notification(let v)? = self.submessage else { preconditionFailure() }
