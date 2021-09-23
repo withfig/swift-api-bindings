@@ -76,6 +76,66 @@ extension Fig_Modifiers: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+public enum Fig_NotificationType: SwiftProtobuf.Enum {
+  public typealias RawValue = Int
+  case all // = 0
+  case notifyOnEditbuffferChange // = 1
+  case notifyOnSettingsChange // = 2
+  case notifyOnPrompt // = 3
+  case notifyOnLocationChange // = 4
+  case notifyOnProcessChanged // = 5
+  case notifyOnKeybindingPressed // = 6
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .all
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .all
+    case 1: self = .notifyOnEditbuffferChange
+    case 2: self = .notifyOnSettingsChange
+    case 3: self = .notifyOnPrompt
+    case 4: self = .notifyOnLocationChange
+    case 5: self = .notifyOnProcessChanged
+    case 6: self = .notifyOnKeybindingPressed
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .all: return 0
+    case .notifyOnEditbuffferChange: return 1
+    case .notifyOnSettingsChange: return 2
+    case .notifyOnPrompt: return 3
+    case .notifyOnLocationChange: return 4
+    case .notifyOnProcessChanged: return 5
+    case .notifyOnKeybindingPressed: return 6
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension Fig_NotificationType: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static var allCases: [Fig_NotificationType] = [
+    .all,
+    .notifyOnEditbuffferChange,
+    .notifyOnSettingsChange,
+    .notifyOnPrompt,
+    .notifyOnLocationChange,
+    .notifyOnProcessChanged,
+    .notifyOnKeybindingPressed,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 public struct Fig_ClientOriginatedMessage {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -140,6 +200,14 @@ public struct Fig_ClientOriginatedMessage {
     set {submessage = .contentsOfDirectoryRequest(newValue)}
   }
 
+  public var notificationRequest: Fig_NotificationRequest {
+    get {
+      if case .notificationRequest(let v)? = submessage {return v}
+      return Fig_NotificationRequest()
+    }
+    set {submessage = .notificationRequest(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Submessage: Equatable {
@@ -149,6 +217,7 @@ public struct Fig_ClientOriginatedMessage {
     case readFileRequest(Fig_ReadFileRequest)
     case writeFileRequest(Fig_WriteFileRequest)
     case contentsOfDirectoryRequest(Fig_ContentsOfDirectoryRequest)
+    case notificationRequest(Fig_NotificationRequest)
 
   #if !swift(>=4.1)
     public static func ==(lhs: Fig_ClientOriginatedMessage.OneOf_Submessage, rhs: Fig_ClientOriginatedMessage.OneOf_Submessage) -> Bool {
@@ -178,6 +247,10 @@ public struct Fig_ClientOriginatedMessage {
       }()
       case (.contentsOfDirectoryRequest, .contentsOfDirectoryRequest): return {
         guard case .contentsOfDirectoryRequest(let l) = lhs, case .contentsOfDirectoryRequest(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.notificationRequest, .notificationRequest): return {
+        guard case .notificationRequest(let l) = lhs, case .notificationRequest(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -682,6 +755,109 @@ public struct Fig_Window {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
+public struct Fig_TextUpdate {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var insertion: String {
+    get {return _insertion ?? String()}
+    set {_insertion = newValue}
+  }
+  /// Returns true if `insertion` has been explicitly set.
+  public var hasInsertion: Bool {return self._insertion != nil}
+  /// Clears the value of `insertion`. Subsequent reads from it will return its default value.
+  public mutating func clearInsertion() {self._insertion = nil}
+
+  public var deletion: Int64 {
+    get {return _deletion ?? 0}
+    set {_deletion = newValue}
+  }
+  /// Returns true if `deletion` has been explicitly set.
+  public var hasDeletion: Bool {return self._deletion != nil}
+  /// Clears the value of `deletion`. Subsequent reads from it will return its default value.
+  public mutating func clearDeletion() {self._deletion = nil}
+
+  public var offset: Int64 {
+    get {return _offset ?? 0}
+    set {_offset = newValue}
+  }
+  /// Returns true if `offset` has been explicitly set.
+  public var hasOffset: Bool {return self._offset != nil}
+  /// Clears the value of `offset`. Subsequent reads from it will return its default value.
+  public mutating func clearOffset() {self._offset = nil}
+
+  public var immediate: Bool {
+    get {return _immediate ?? false}
+    set {_immediate = newValue}
+  }
+  /// Returns true if `immediate` has been explicitly set.
+  public var hasImmediate: Bool {return self._immediate != nil}
+  /// Clears the value of `immediate`. Subsequent reads from it will return its default value.
+  public mutating func clearImmediate() {self._immediate = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _insertion: String? = nil
+  fileprivate var _deletion: Int64? = nil
+  fileprivate var _offset: Int64? = nil
+  fileprivate var _immediate: Bool? = nil
+}
+
+public struct Fig_InsertTextRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var type: Fig_InsertTextRequest.OneOf_Type? = nil
+
+  public var text: String {
+    get {
+      if case .text(let v)? = type {return v}
+      return String()
+    }
+    set {type = .text(newValue)}
+  }
+
+  public var update: Fig_TextUpdate {
+    get {
+      if case .update(let v)? = type {return v}
+      return Fig_TextUpdate()
+    }
+    set {type = .update(newValue)}
+  }
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public enum OneOf_Type: Equatable {
+    case text(String)
+    case update(Fig_TextUpdate)
+
+  #if !swift(>=4.1)
+    public static func ==(lhs: Fig_InsertTextRequest.OneOf_Type, rhs: Fig_InsertTextRequest.OneOf_Type) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.text, .text): return {
+        guard case .text(let l) = lhs, case .text(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.update, .update): return {
+        guard case .update(let l) = lhs, case .update(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
+      }
+    }
+  #endif
+  }
+
+  public init() {}
+}
+
 public struct Fig_PseudoterminalWriteRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1022,6 +1198,37 @@ public struct Fig_ContentsOfDirectoryResponse {
   public init() {}
 }
 
+public struct Fig_NotificationRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var subscribe: Bool {
+    get {return _subscribe ?? false}
+    set {_subscribe = newValue}
+  }
+  /// Returns true if `subscribe` has been explicitly set.
+  public var hasSubscribe: Bool {return self._subscribe != nil}
+  /// Clears the value of `subscribe`. Subsequent reads from it will return its default value.
+  public mutating func clearSubscribe() {self._subscribe = nil}
+
+  public var type: Fig_NotificationType {
+    get {return _type ?? .all}
+    set {_type = newValue}
+  }
+  /// Returns true if `type` has been explicitly set.
+  public var hasType: Bool {return self._type != nil}
+  /// Clears the value of `type`. Subsequent reads from it will return its default value.
+  public mutating func clearType() {self._type = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _subscribe: Bool? = nil
+  fileprivate var _type: Fig_NotificationType? = nil
+}
+
 public struct Fig_Notification {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1327,6 +1534,18 @@ extension Fig_Modifiers: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
+extension Fig_NotificationType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "ALL"),
+    1: .same(proto: "NOTIFY_ON_EDITBUFFFER_CHANGE"),
+    2: .same(proto: "NOTIFY_ON_SETTINGS_CHANGE"),
+    3: .same(proto: "NOTIFY_ON_PROMPT"),
+    4: .same(proto: "NOTIFY_ON_LOCATION_CHANGE"),
+    5: .same(proto: "NOTIFY_ON_PROCESS_CHANGED"),
+    6: .same(proto: "NOTIFY_ON_KEYBINDING_PRESSED"),
+  ]
+}
+
 extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ClientOriginatedMessage"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1337,6 +1556,7 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     104: .standard(proto: "read_file_request"),
     105: .standard(proto: "write_file_request"),
     106: .standard(proto: "contents_of_directory_request"),
+    107: .standard(proto: "notification_request"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1424,6 +1644,19 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
           self.submessage = .contentsOfDirectoryRequest(v)
         }
       }()
+      case 107: try {
+        var v: Fig_NotificationRequest?
+        var hadOneofValue = false
+        if let current = self.submessage {
+          hadOneofValue = true
+          if case .notificationRequest(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.submessage = .notificationRequest(v)
+        }
+      }()
       default: break
       }
     }
@@ -1460,6 +1693,10 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     case .contentsOfDirectoryRequest?: try {
       guard case .contentsOfDirectoryRequest(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 106)
+    }()
+    case .notificationRequest?: try {
+      guard case .notificationRequest(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 107)
     }()
     case nil: break
     }
@@ -2141,6 +2378,120 @@ extension Fig_Window: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
   }
 }
 
+extension Fig_TextUpdate: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TextUpdate"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "insertion"),
+    2: .same(proto: "deletion"),
+    3: .same(proto: "offset"),
+    4: .same(proto: "immediate"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self._insertion) }()
+      case 2: try { try decoder.decodeSingularInt64Field(value: &self._deletion) }()
+      case 3: try { try decoder.decodeSingularInt64Field(value: &self._offset) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self._immediate) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if let v = self._insertion {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    }
+    if let v = self._deletion {
+      try visitor.visitSingularInt64Field(value: v, fieldNumber: 2)
+    }
+    if let v = self._offset {
+      try visitor.visitSingularInt64Field(value: v, fieldNumber: 3)
+    }
+    if let v = self._immediate {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Fig_TextUpdate, rhs: Fig_TextUpdate) -> Bool {
+    if lhs._insertion != rhs._insertion {return false}
+    if lhs._deletion != rhs._deletion {return false}
+    if lhs._offset != rhs._offset {return false}
+    if lhs._immediate != rhs._immediate {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Fig_InsertTextRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".InsertTextRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "text"),
+    2: .same(proto: "update"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.type != nil {try decoder.handleConflictingOneOf()}
+          self.type = .text(v)
+        }
+      }()
+      case 2: try {
+        var v: Fig_TextUpdate?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .update(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .update(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every case branch when no optimizations are
+    // enabled. https://github.com/apple/swift-protobuf/issues/1034
+    switch self.type {
+    case .text?: try {
+      guard case .text(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    }()
+    case .update?: try {
+      guard case .update(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }()
+    case nil: break
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Fig_InsertTextRequest, rhs: Fig_InsertTextRequest) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Fig_PseudoterminalWriteRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PseudoterminalWriteRequest"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -2570,6 +2921,44 @@ extension Fig_ContentsOfDirectoryResponse: SwiftProtobuf.Message, SwiftProtobuf.
 
   public static func ==(lhs: Fig_ContentsOfDirectoryResponse, rhs: Fig_ContentsOfDirectoryResponse) -> Bool {
     if lhs.fileNames != rhs.fileNames {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Fig_NotificationRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".NotificationRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "subscribe"),
+    2: .same(proto: "type"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self._subscribe) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self._type) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if let v = self._subscribe {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
+    }
+    if let v = self._type {
+      try visitor.visitSingularEnumField(value: v, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Fig_NotificationRequest, rhs: Fig_NotificationRequest) -> Bool {
+    if lhs._subscribe != rhs._subscribe {return false}
+    if lhs._type != rhs._type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
