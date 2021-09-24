@@ -208,6 +208,22 @@ public struct Fig_ClientOriginatedMessage {
     set {submessage = .notificationRequest(newValue)}
   }
 
+  public var getSettingsPropertyRequest: Fig_GetSettingsPropertyRequest {
+    get {
+      if case .getSettingsPropertyRequest(let v)? = submessage {return v}
+      return Fig_GetSettingsPropertyRequest()
+    }
+    set {submessage = .getSettingsPropertyRequest(newValue)}
+  }
+
+  public var updateSettingsPropertyRequest: Fig_UpdateSettingsPropertyRequest {
+    get {
+      if case .updateSettingsPropertyRequest(let v)? = submessage {return v}
+      return Fig_UpdateSettingsPropertyRequest()
+    }
+    set {submessage = .updateSettingsPropertyRequest(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Submessage: Equatable {
@@ -218,6 +234,8 @@ public struct Fig_ClientOriginatedMessage {
     case writeFileRequest(Fig_WriteFileRequest)
     case contentsOfDirectoryRequest(Fig_ContentsOfDirectoryRequest)
     case notificationRequest(Fig_NotificationRequest)
+    case getSettingsPropertyRequest(Fig_GetSettingsPropertyRequest)
+    case updateSettingsPropertyRequest(Fig_UpdateSettingsPropertyRequest)
 
   #if !swift(>=4.1)
     public static func ==(lhs: Fig_ClientOriginatedMessage.OneOf_Submessage, rhs: Fig_ClientOriginatedMessage.OneOf_Submessage) -> Bool {
@@ -251,6 +269,14 @@ public struct Fig_ClientOriginatedMessage {
       }()
       case (.notificationRequest, .notificationRequest): return {
         guard case .notificationRequest(let l) = lhs, case .notificationRequest(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.getSettingsPropertyRequest, .getSettingsPropertyRequest): return {
+        guard case .getSettingsPropertyRequest(let l) = lhs, case .getSettingsPropertyRequest(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.updateSettingsPropertyRequest, .updateSettingsPropertyRequest): return {
+        guard case .updateSettingsPropertyRequest(let l) = lhs, case .updateSettingsPropertyRequest(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -329,6 +355,14 @@ public struct Fig_ServerOriginatedMessage {
     set {submessage = .contentsOfDirectoryResponse(newValue)}
   }
 
+  public var getSettingsPropertyResponse: Fig_GetSettingsPropertyResponse {
+    get {
+      if case .getSettingsPropertyResponse(let v)? = submessage {return v}
+      return Fig_GetSettingsPropertyResponse()
+    }
+    set {submessage = .getSettingsPropertyResponse(newValue)}
+  }
+
   public var notification: Fig_Notification {
     get {
       if case .notification(let v)? = submessage {return v}
@@ -347,6 +381,7 @@ public struct Fig_ServerOriginatedMessage {
     case pseudoterminalExecuteResponse(Fig_PseudoterminalExecuteResponse)
     case readFileResponse(Fig_ReadFileResponse)
     case contentsOfDirectoryResponse(Fig_ContentsOfDirectoryResponse)
+    case getSettingsPropertyResponse(Fig_GetSettingsPropertyResponse)
     case notification(Fig_Notification)
 
   #if !swift(>=4.1)
@@ -377,6 +412,10 @@ public struct Fig_ServerOriginatedMessage {
       }()
       case (.contentsOfDirectoryResponse, .contentsOfDirectoryResponse): return {
         guard case .contentsOfDirectoryResponse(let l) = lhs, case .contentsOfDirectoryResponse(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.getSettingsPropertyResponse, .getSettingsPropertyResponse): return {
+        guard case .getSettingsPropertyResponse(let l) = lhs, case .getSettingsPropertyResponse(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.notification, .notification): return {
@@ -1198,6 +1237,89 @@ public struct Fig_ContentsOfDirectoryResponse {
   public init() {}
 }
 
+public struct Fig_GetSettingsPropertyRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var key: String {
+    get {return _key ?? String()}
+    set {_key = newValue}
+  }
+  /// Returns true if `key` has been explicitly set.
+  public var hasKey: Bool {return self._key != nil}
+  /// Clears the value of `key`. Subsequent reads from it will return its default value.
+  public mutating func clearKey() {self._key = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _key: String? = nil
+}
+
+public struct Fig_GetSettingsPropertyResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var jsonBlob: String {
+    get {return _jsonBlob ?? String()}
+    set {_jsonBlob = newValue}
+  }
+  /// Returns true if `jsonBlob` has been explicitly set.
+  public var hasJsonBlob: Bool {return self._jsonBlob != nil}
+  /// Clears the value of `jsonBlob`. Subsequent reads from it will return its default value.
+  public mutating func clearJsonBlob() {self._jsonBlob = nil}
+
+  public var isDefault: Bool {
+    get {return _isDefault ?? false}
+    set {_isDefault = newValue}
+  }
+  /// Returns true if `isDefault` has been explicitly set.
+  public var hasIsDefault: Bool {return self._isDefault != nil}
+  /// Clears the value of `isDefault`. Subsequent reads from it will return its default value.
+  public mutating func clearIsDefault() {self._isDefault = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _jsonBlob: String? = nil
+  fileprivate var _isDefault: Bool? = nil
+}
+
+public struct Fig_UpdateSettingsPropertyRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var key: String {
+    get {return _key ?? String()}
+    set {_key = newValue}
+  }
+  /// Returns true if `key` has been explicitly set.
+  public var hasKey: Bool {return self._key != nil}
+  /// Clears the value of `key`. Subsequent reads from it will return its default value.
+  public mutating func clearKey() {self._key = nil}
+
+  public var value: String {
+    get {return _value ?? String()}
+    set {_value = newValue}
+  }
+  /// Returns true if `value` has been explicitly set.
+  public var hasValue: Bool {return self._value != nil}
+  /// Clears the value of `value`. Subsequent reads from it will return its default value.
+  public mutating func clearValue() {self._value = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _key: String? = nil
+  fileprivate var _value: String? = nil
+}
+
 public struct Fig_NotificationRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1557,6 +1679,8 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     105: .standard(proto: "write_file_request"),
     106: .standard(proto: "contents_of_directory_request"),
     107: .standard(proto: "notification_request"),
+    108: .standard(proto: "get_settings_property_request"),
+    109: .standard(proto: "update_settings_property_request"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1657,6 +1781,32 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
           self.submessage = .notificationRequest(v)
         }
       }()
+      case 108: try {
+        var v: Fig_GetSettingsPropertyRequest?
+        var hadOneofValue = false
+        if let current = self.submessage {
+          hadOneofValue = true
+          if case .getSettingsPropertyRequest(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.submessage = .getSettingsPropertyRequest(v)
+        }
+      }()
+      case 109: try {
+        var v: Fig_UpdateSettingsPropertyRequest?
+        var hadOneofValue = false
+        if let current = self.submessage {
+          hadOneofValue = true
+          if case .updateSettingsPropertyRequest(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.submessage = .updateSettingsPropertyRequest(v)
+        }
+      }()
       default: break
       }
     }
@@ -1698,6 +1848,14 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
       guard case .notificationRequest(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 107)
     }()
+    case .getSettingsPropertyRequest?: try {
+      guard case .getSettingsPropertyRequest(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 108)
+    }()
+    case .updateSettingsPropertyRequest?: try {
+      guard case .updateSettingsPropertyRequest(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 109)
+    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -1721,6 +1879,7 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     101: .standard(proto: "pseudoterminal_execute_response"),
     102: .standard(proto: "read_file_response"),
     103: .standard(proto: "contents_of_directory_response"),
+    104: .standard(proto: "get_settings_property_response"),
     1000: .same(proto: "notification"),
   ]
 
@@ -1799,6 +1958,19 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
           self.submessage = .contentsOfDirectoryResponse(v)
         }
       }()
+      case 104: try {
+        var v: Fig_GetSettingsPropertyResponse?
+        var hadOneofValue = false
+        if let current = self.submessage {
+          hadOneofValue = true
+          if case .getSettingsPropertyResponse(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.submessage = .getSettingsPropertyResponse(v)
+        }
+      }()
       case 1000: try {
         var v: Fig_Notification?
         var hadOneofValue = false
@@ -1848,6 +2020,10 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     case .contentsOfDirectoryResponse?: try {
       guard case .contentsOfDirectoryResponse(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 103)
+    }()
+    case .getSettingsPropertyResponse?: try {
+      guard case .getSettingsPropertyResponse(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 104)
     }()
     case .notification?: try {
       guard case .notification(let v)? = self.submessage else { preconditionFailure() }
@@ -2921,6 +3097,114 @@ extension Fig_ContentsOfDirectoryResponse: SwiftProtobuf.Message, SwiftProtobuf.
 
   public static func ==(lhs: Fig_ContentsOfDirectoryResponse, rhs: Fig_ContentsOfDirectoryResponse) -> Bool {
     if lhs.fileNames != rhs.fileNames {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Fig_GetSettingsPropertyRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetSettingsPropertyRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "key"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self._key) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if let v = self._key {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Fig_GetSettingsPropertyRequest, rhs: Fig_GetSettingsPropertyRequest) -> Bool {
+    if lhs._key != rhs._key {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Fig_GetSettingsPropertyResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetSettingsPropertyResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "jsonBlob"),
+    2: .same(proto: "isDefault"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self._jsonBlob) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self._isDefault) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if let v = self._jsonBlob {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    }
+    if let v = self._isDefault {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Fig_GetSettingsPropertyResponse, rhs: Fig_GetSettingsPropertyResponse) -> Bool {
+    if lhs._jsonBlob != rhs._jsonBlob {return false}
+    if lhs._isDefault != rhs._isDefault {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Fig_UpdateSettingsPropertyRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UpdateSettingsPropertyRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "key"),
+    2: .same(proto: "value"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self._key) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self._value) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if let v = self._key {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    }
+    if let v = self._value {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Fig_UpdateSettingsPropertyRequest, rhs: Fig_UpdateSettingsPropertyRequest) -> Bool {
+    if lhs._key != rhs._key {return false}
+    if lhs._value != rhs._value {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
