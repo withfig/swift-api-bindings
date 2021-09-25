@@ -232,6 +232,14 @@ public struct Fig_ClientOriginatedMessage {
     set {submessage = .insertTextRequest(newValue)}
   }
 
+  public var updateApplicationPropertiesReuest: Fig_UpdateApplicationPropertiesRequest {
+    get {
+      if case .updateApplicationPropertiesReuest(let v)? = submessage {return v}
+      return Fig_UpdateApplicationPropertiesRequest()
+    }
+    set {submessage = .updateApplicationPropertiesReuest(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Submessage: Equatable {
@@ -245,6 +253,7 @@ public struct Fig_ClientOriginatedMessage {
     case getSettingsPropertyRequest(Fig_GetSettingsPropertyRequest)
     case updateSettingsPropertyRequest(Fig_UpdateSettingsPropertyRequest)
     case insertTextRequest(Fig_InsertTextRequest)
+    case updateApplicationPropertiesReuest(Fig_UpdateApplicationPropertiesRequest)
 
   #if !swift(>=4.1)
     public static func ==(lhs: Fig_ClientOriginatedMessage.OneOf_Submessage, rhs: Fig_ClientOriginatedMessage.OneOf_Submessage) -> Bool {
@@ -290,6 +299,10 @@ public struct Fig_ClientOriginatedMessage {
       }()
       case (.insertTextRequest, .insertTextRequest): return {
         guard case .insertTextRequest(let l) = lhs, case .insertTextRequest(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.updateApplicationPropertiesReuest, .updateApplicationPropertiesReuest): return {
+        guard case .updateApplicationPropertiesReuest(let l) = lhs, case .updateApplicationPropertiesReuest(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -1333,6 +1346,27 @@ public struct Fig_UpdateSettingsPropertyRequest {
   fileprivate var _value: String? = nil
 }
 
+public struct Fig_UpdateApplicationPropertiesRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var interceptBoundKeystrokes: Bool {
+    get {return _interceptBoundKeystrokes ?? false}
+    set {_interceptBoundKeystrokes = newValue}
+  }
+  /// Returns true if `interceptBoundKeystrokes` has been explicitly set.
+  public var hasInterceptBoundKeystrokes: Bool {return self._interceptBoundKeystrokes != nil}
+  /// Clears the value of `interceptBoundKeystrokes`. Subsequent reads from it will return its default value.
+  public mutating func clearInterceptBoundKeystrokes() {self._interceptBoundKeystrokes = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _interceptBoundKeystrokes: Bool? = nil
+}
+
 public struct Fig_NotificationRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1715,6 +1749,7 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     108: .standard(proto: "get_settings_property_request"),
     109: .standard(proto: "update_settings_property_request"),
     110: .standard(proto: "insert_text_request"),
+    111: .standard(proto: "update_application_properties_reuest"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1854,6 +1889,19 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
           self.submessage = .insertTextRequest(v)
         }
       }()
+      case 111: try {
+        var v: Fig_UpdateApplicationPropertiesRequest?
+        var hadOneofValue = false
+        if let current = self.submessage {
+          hadOneofValue = true
+          if case .updateApplicationPropertiesReuest(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.submessage = .updateApplicationPropertiesReuest(v)
+        }
+      }()
       default: break
       }
     }
@@ -1906,6 +1954,10 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     case .insertTextRequest?: try {
       guard case .insertTextRequest(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 110)
+    }()
+    case .updateApplicationPropertiesReuest?: try {
+      guard case .updateApplicationPropertiesReuest(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 111)
     }()
     case nil: break
     }
@@ -3256,6 +3308,38 @@ extension Fig_UpdateSettingsPropertyRequest: SwiftProtobuf.Message, SwiftProtobu
   public static func ==(lhs: Fig_UpdateSettingsPropertyRequest, rhs: Fig_UpdateSettingsPropertyRequest) -> Bool {
     if lhs._key != rhs._key {return false}
     if lhs._value != rhs._value {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Fig_UpdateApplicationPropertiesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UpdateApplicationPropertiesRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "interceptBoundKeystrokes"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self._interceptBoundKeystrokes) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if let v = self._interceptBoundKeystrokes {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Fig_UpdateApplicationPropertiesRequest, rhs: Fig_UpdateApplicationPropertiesRequest) -> Bool {
+    if lhs._interceptBoundKeystrokes != rhs._interceptBoundKeystrokes {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
