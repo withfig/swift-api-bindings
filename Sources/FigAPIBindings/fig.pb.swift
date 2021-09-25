@@ -232,12 +232,12 @@ public struct Fig_ClientOriginatedMessage {
     set {submessage = .insertTextRequest(newValue)}
   }
 
-  public var updateApplicationPropertiesReuest: Fig_UpdateApplicationPropertiesRequest {
+  public var updateApplicationPropertiesRequest: Fig_UpdateApplicationPropertiesRequest {
     get {
-      if case .updateApplicationPropertiesReuest(let v)? = submessage {return v}
+      if case .updateApplicationPropertiesRequest(let v)? = submessage {return v}
       return Fig_UpdateApplicationPropertiesRequest()
     }
-    set {submessage = .updateApplicationPropertiesReuest(newValue)}
+    set {submessage = .updateApplicationPropertiesRequest(newValue)}
   }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -253,7 +253,7 @@ public struct Fig_ClientOriginatedMessage {
     case getSettingsPropertyRequest(Fig_GetSettingsPropertyRequest)
     case updateSettingsPropertyRequest(Fig_UpdateSettingsPropertyRequest)
     case insertTextRequest(Fig_InsertTextRequest)
-    case updateApplicationPropertiesReuest(Fig_UpdateApplicationPropertiesRequest)
+    case updateApplicationPropertiesRequest(Fig_UpdateApplicationPropertiesRequest)
 
   #if !swift(>=4.1)
     public static func ==(lhs: Fig_ClientOriginatedMessage.OneOf_Submessage, rhs: Fig_ClientOriginatedMessage.OneOf_Submessage) -> Bool {
@@ -301,8 +301,8 @@ public struct Fig_ClientOriginatedMessage {
         guard case .insertTextRequest(let l) = lhs, case .insertTextRequest(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.updateApplicationPropertiesReuest, .updateApplicationPropertiesReuest): return {
-        guard case .updateApplicationPropertiesReuest(let l) = lhs, case .updateApplicationPropertiesReuest(let r) = rhs else { preconditionFailure() }
+      case (.updateApplicationPropertiesRequest, .updateApplicationPropertiesRequest): return {
+        guard case .updateApplicationPropertiesRequest(let l) = lhs, case .updateApplicationPropertiesRequest(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -1749,7 +1749,7 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     108: .standard(proto: "get_settings_property_request"),
     109: .standard(proto: "update_settings_property_request"),
     110: .standard(proto: "insert_text_request"),
-    111: .standard(proto: "update_application_properties_reuest"),
+    111: .standard(proto: "update_application_properties_request"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1894,12 +1894,12 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
         var hadOneofValue = false
         if let current = self.submessage {
           hadOneofValue = true
-          if case .updateApplicationPropertiesReuest(let m) = current {v = m}
+          if case .updateApplicationPropertiesRequest(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.submessage = .updateApplicationPropertiesReuest(v)
+          self.submessage = .updateApplicationPropertiesRequest(v)
         }
       }()
       default: break
@@ -1955,8 +1955,8 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
       guard case .insertTextRequest(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 110)
     }()
-    case .updateApplicationPropertiesReuest?: try {
-      guard case .updateApplicationPropertiesReuest(let v)? = self.submessage else { preconditionFailure() }
+    case .updateApplicationPropertiesRequest?: try {
+      guard case .updateApplicationPropertiesRequest(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 111)
     }()
     case nil: break
