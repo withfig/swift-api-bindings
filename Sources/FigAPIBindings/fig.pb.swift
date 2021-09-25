@@ -160,12 +160,12 @@ public struct Fig_ClientOriginatedMessage {
     set {submessage = .positionWindowRequest(newValue)}
   }
 
-  public var ptyRequest: Fig_PseudoterminalExecuteRequest {
+  public var pseudoterminalExecuteRequest: Fig_PseudoterminalExecuteRequest {
     get {
-      if case .ptyRequest(let v)? = submessage {return v}
+      if case .pseudoterminalExecuteRequest(let v)? = submessage {return v}
       return Fig_PseudoterminalExecuteRequest()
     }
-    set {submessage = .ptyRequest(newValue)}
+    set {submessage = .pseudoterminalExecuteRequest(newValue)}
   }
 
   public var pseudoterminalWriteRequest: Fig_PseudoterminalWriteRequest {
@@ -228,7 +228,7 @@ public struct Fig_ClientOriginatedMessage {
 
   public enum OneOf_Submessage: Equatable {
     case positionWindowRequest(Fig_PositionWindowRequest)
-    case ptyRequest(Fig_PseudoterminalExecuteRequest)
+    case pseudoterminalExecuteRequest(Fig_PseudoterminalExecuteRequest)
     case pseudoterminalWriteRequest(Fig_PseudoterminalWriteRequest)
     case readFileRequest(Fig_ReadFileRequest)
     case writeFileRequest(Fig_WriteFileRequest)
@@ -247,8 +247,8 @@ public struct Fig_ClientOriginatedMessage {
         guard case .positionWindowRequest(let l) = lhs, case .positionWindowRequest(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.ptyRequest, .ptyRequest): return {
-        guard case .ptyRequest(let l) = lhs, case .ptyRequest(let r) = rhs else { preconditionFailure() }
+      case (.pseudoterminalExecuteRequest, .pseudoterminalExecuteRequest): return {
+        guard case .pseudoterminalExecuteRequest(let l) = lhs, case .pseudoterminalExecuteRequest(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.pseudoterminalWriteRequest, .pseudoterminalWriteRequest): return {
@@ -1673,7 +1673,7 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
     101: .standard(proto: "position_window_request"),
-    102: .standard(proto: "pty_request"),
+    102: .standard(proto: "pseudoterminal_execute_request"),
     103: .standard(proto: "pseudoterminal_write_request"),
     104: .standard(proto: "read_file_request"),
     105: .standard(proto: "write_file_request"),
@@ -1708,12 +1708,12 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
         var hadOneofValue = false
         if let current = self.submessage {
           hadOneofValue = true
-          if case .ptyRequest(let m) = current {v = m}
+          if case .pseudoterminalExecuteRequest(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.submessage = .ptyRequest(v)
+          self.submessage = .pseudoterminalExecuteRequest(v)
         }
       }()
       case 103: try {
@@ -1824,8 +1824,8 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
       guard case .positionWindowRequest(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
     }()
-    case .ptyRequest?: try {
-      guard case .ptyRequest(let v)? = self.submessage else { preconditionFailure() }
+    case .pseudoterminalExecuteRequest?: try {
+      guard case .pseudoterminalExecuteRequest(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 102)
     }()
     case .pseudoterminalWriteRequest?: try {
