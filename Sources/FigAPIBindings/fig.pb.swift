@@ -1634,11 +1634,21 @@ public struct Fig_KeybindingPressedNotification {
   /// Clears the value of `keypress`. Subsequent reads from it will return its default value.
   public mutating func clearKeypress() {self._keypress = nil}
 
+  public var action: String {
+    get {return _action ?? String()}
+    set {_action = newValue}
+  }
+  /// Returns true if `action` has been explicitly set.
+  public var hasAction: Bool {return self._action != nil}
+  /// Clears the value of `action`. Subsequent reads from it will return its default value.
+  public mutating func clearAction() {self._action = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _keypress: Fig_KeyEvent? = nil
+  fileprivate var _action: String? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -3589,6 +3599,7 @@ extension Fig_KeybindingPressedNotification: SwiftProtobuf.Message, SwiftProtobu
   public static let protoMessageName: String = _protobuf_package + ".KeybindingPressedNotification"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "keypress"),
+    2: .same(proto: "action"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3598,6 +3609,7 @@ extension Fig_KeybindingPressedNotification: SwiftProtobuf.Message, SwiftProtobu
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._keypress) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self._action) }()
       default: break
       }
     }
@@ -3607,11 +3619,15 @@ extension Fig_KeybindingPressedNotification: SwiftProtobuf.Message, SwiftProtobu
     if let v = self._keypress {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }
+    if let v = self._action {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Fig_KeybindingPressedNotification, rhs: Fig_KeybindingPressedNotification) -> Bool {
     if lhs._keypress != rhs._keypress {return false}
+    if lhs._action != rhs._action {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
