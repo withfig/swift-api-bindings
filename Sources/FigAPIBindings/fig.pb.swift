@@ -224,6 +224,14 @@ public struct Fig_ClientOriginatedMessage {
     set {submessage = .updateSettingsPropertyRequest(newValue)}
   }
 
+  public var insertTextRequest: Fig_InsertTextRequest {
+    get {
+      if case .insertTextRequest(let v)? = submessage {return v}
+      return Fig_InsertTextRequest()
+    }
+    set {submessage = .insertTextRequest(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Submessage: Equatable {
@@ -236,6 +244,7 @@ public struct Fig_ClientOriginatedMessage {
     case notificationRequest(Fig_NotificationRequest)
     case getSettingsPropertyRequest(Fig_GetSettingsPropertyRequest)
     case updateSettingsPropertyRequest(Fig_UpdateSettingsPropertyRequest)
+    case insertTextRequest(Fig_InsertTextRequest)
 
   #if !swift(>=4.1)
     public static func ==(lhs: Fig_ClientOriginatedMessage.OneOf_Submessage, rhs: Fig_ClientOriginatedMessage.OneOf_Submessage) -> Bool {
@@ -277,6 +286,10 @@ public struct Fig_ClientOriginatedMessage {
       }()
       case (.updateSettingsPropertyRequest, .updateSettingsPropertyRequest): return {
         guard case .updateSettingsPropertyRequest(let l) = lhs, case .updateSettingsPropertyRequest(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.insertTextRequest, .insertTextRequest): return {
+        guard case .insertTextRequest(let l) = lhs, case .insertTextRequest(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -1531,11 +1544,21 @@ public struct Fig_ShellPromptReturnedNotification {
   /// Clears the value of `sessionID`. Subsequent reads from it will return its default value.
   public mutating func clearSessionID() {self._sessionID = nil}
 
+  public var shell: Fig_Process {
+    get {return _shell ?? Fig_Process()}
+    set {_shell = newValue}
+  }
+  /// Returns true if `shell` has been explicitly set.
+  public var hasShell: Bool {return self._shell != nil}
+  /// Clears the value of `shell`. Subsequent reads from it will return its default value.
+  public mutating func clearShell() {self._shell = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _sessionID: String? = nil
+  fileprivate var _shell: Fig_Process? = nil
 }
 
 public struct Fig_LocationChangedNotification {
@@ -1691,6 +1714,7 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     107: .standard(proto: "notification_request"),
     108: .standard(proto: "get_settings_property_request"),
     109: .standard(proto: "update_settings_property_request"),
+    110: .standard(proto: "insert_text_request"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1817,6 +1841,19 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
           self.submessage = .updateSettingsPropertyRequest(v)
         }
       }()
+      case 110: try {
+        var v: Fig_InsertTextRequest?
+        var hadOneofValue = false
+        if let current = self.submessage {
+          hadOneofValue = true
+          if case .insertTextRequest(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.submessage = .insertTextRequest(v)
+        }
+      }()
       default: break
       }
     }
@@ -1865,6 +1902,10 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     case .updateSettingsPropertyRequest?: try {
       guard case .updateSettingsPropertyRequest(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 109)
+    }()
+    case .insertTextRequest?: try {
+      guard case .insertTextRequest(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 110)
     }()
     case nil: break
     }
@@ -3479,6 +3520,7 @@ extension Fig_ShellPromptReturnedNotification: SwiftProtobuf.Message, SwiftProto
   public static let protoMessageName: String = _protobuf_package + ".ShellPromptReturnedNotification"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "session_id"),
+    2: .same(proto: "shell"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3488,6 +3530,7 @@ extension Fig_ShellPromptReturnedNotification: SwiftProtobuf.Message, SwiftProto
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self._sessionID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._shell) }()
       default: break
       }
     }
@@ -3497,11 +3540,15 @@ extension Fig_ShellPromptReturnedNotification: SwiftProtobuf.Message, SwiftProto
     if let v = self._sessionID {
       try visitor.visitSingularStringField(value: v, fieldNumber: 1)
     }
+    if let v = self._shell {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Fig_ShellPromptReturnedNotification, rhs: Fig_ShellPromptReturnedNotification) -> Bool {
     if lhs._sessionID != rhs._sessionID {return false}
+    if lhs._shell != rhs._shell {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
