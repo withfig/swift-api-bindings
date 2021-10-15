@@ -1746,6 +1746,158 @@ public struct Fig_WindowFocusChangedNotification {
   fileprivate var _window: Fig_Window? = nil
 }
 
+//// Constants
+/// Can be found under fig.constants. Certain legacy constants are included at the top-level for backwards compatibility.
+public struct Fig_Constants {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// the current version of Fig
+  public var version: String {
+    get {return _version ?? String()}
+    set {_version = newValue}
+  }
+  /// Returns true if `version` has been explicitly set.
+  public var hasVersion: Bool {return self._version != nil}
+  /// Clears the value of `version`. Subsequent reads from it will return its default value.
+  public mutating func clearVersion() {self._version = nil}
+
+  /// the current build of Fig 
+  public var build: String {
+    get {return _build ?? String()}
+    set {_build = newValue}
+  }
+  /// Returns true if `build` has been explicitly set.
+  public var hasBuild: Bool {return self._build != nil}
+  /// Clears the value of `build`. Subsequent reads from it will return its default value.
+  public mutating func clearBuild() {self._build = nil}
+
+  /// the path to the figcli executable
+  public var cli: String {
+    get {return _cli ?? String()}
+    set {_cli = newValue}
+  }
+  /// Returns true if `cli` has been explicitly set.
+  public var hasCli: Bool {return self._cli != nil}
+  /// Clears the value of `cli`. Subsequent reads from it will return its default value.
+  public mutating func clearCli() {self._cli = nil}
+
+  /// the filepath of the macOS bundle
+  public var bundlePath: String {
+    get {return _bundlePath ?? String()}
+    set {_bundlePath = newValue}
+  }
+  /// Returns true if `bundlePath` has been explicitly set.
+  public var hasBundlePath: Bool {return self._bundlePath != nil}
+  /// Clears the value of `bundlePath`. Subsequent reads from it will return its default value.
+  public mutating func clearBundlePath() {self._bundlePath = nil}
+
+  /// the remote URL where apps are loaded from
+  public var remote: String {
+    get {return _remote ?? String()}
+    set {_remote = newValue}
+  }
+  /// Returns true if `remote` has been explicitly set.
+  public var hasRemote: Bool {return self._remote != nil}
+  /// Clears the value of `remote`. Subsequent reads from it will return its default value.
+  public mutating func clearRemote() {self._remote = nil}
+
+  /// the user's home directory 
+  public var home: String {
+    get {return _home ?? String()}
+    set {_home = newValue}
+  }
+  /// Returns true if `home` has been explicitly set.
+  public var hasHome: Bool {return self._home != nil}
+  /// Clears the value of `home`. Subsequent reads from it will return its default value.
+  public mutating func clearHome() {self._home = nil}
+
+  /// the user's name (equivalent to running `whoami`)
+  public var user: String {
+    get {return _user ?? String()}
+    set {_user = newValue}
+  }
+  /// Returns true if `user` has been explicitly set.
+  public var hasUser: Bool {return self._user != nil}
+  /// Clears the value of `user`. Subsequent reads from it will return its default value.
+  public mutating func clearUser() {self._user = nil}
+
+  /// the default macOS $PATH
+  public var defaultPath: String {
+    get {return _defaultPath ?? String()}
+    set {_defaultPath = newValue}
+  }
+  /// Returns true if `defaultPath` has been explicitly set.
+  public var hasDefaultPath: Bool {return self._defaultPath != nil}
+  /// Clears the value of `defaultPath`. Subsequent reads from it will return its default value.
+  public mutating func clearDefaultPath() {self._defaultPath = nil}
+
+  public var jsonMessageRecieved: String {
+    get {return _jsonMessageRecieved ?? String()}
+    set {_jsonMessageRecieved = newValue}
+  }
+  /// Returns true if `jsonMessageRecieved` has been explicitly set.
+  public var hasJsonMessageRecieved: Bool {return self._jsonMessageRecieved != nil}
+  /// Clears the value of `jsonMessageRecieved`. Subsequent reads from it will return its default value.
+  public mutating func clearJsonMessageRecieved() {self._jsonMessageRecieved = nil}
+
+  public var jsonMessageHandler: String {
+    get {return _jsonMessageHandler ?? String()}
+    set {_jsonMessageHandler = newValue}
+  }
+  /// Returns true if `jsonMessageHandler` has been explicitly set.
+  public var hasJsonMessageHandler: Bool {return self._jsonMessageHandler != nil}
+  /// Clears the value of `jsonMessageHandler`. Subsequent reads from it will return its default value.
+  public mutating func clearJsonMessageHandler() {self._jsonMessageHandler = nil}
+
+  public var protoMessageRecieved: String {
+    get {return _protoMessageRecieved ?? String()}
+    set {_protoMessageRecieved = newValue}
+  }
+  /// Returns true if `protoMessageRecieved` has been explicitly set.
+  public var hasProtoMessageRecieved: Bool {return self._protoMessageRecieved != nil}
+  /// Clears the value of `protoMessageRecieved`. Subsequent reads from it will return its default value.
+  public mutating func clearProtoMessageRecieved() {self._protoMessageRecieved = nil}
+
+  public var protoMessageHandler: String {
+    get {return _protoMessageHandler ?? String()}
+    set {_protoMessageHandler = newValue}
+  }
+  /// Returns true if `protoMessageHandler` has been explicitly set.
+  public var hasProtoMessageHandler: Bool {return self._protoMessageHandler != nil}
+  /// Clears the value of `protoMessageHandler`. Subsequent reads from it will return its default value.
+  public mutating func clearProtoMessageHandler() {self._protoMessageHandler = nil}
+
+  /// a comma-separated list of all themes
+  public var themes: String {
+    get {return _themes ?? String()}
+    set {_themes = newValue}
+  }
+  /// Returns true if `themes` has been explicitly set.
+  public var hasThemes: Bool {return self._themes != nil}
+  /// Clears the value of `themes`. Subsequent reads from it will return its default value.
+  public mutating func clearThemes() {self._themes = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _version: String? = nil
+  fileprivate var _build: String? = nil
+  fileprivate var _cli: String? = nil
+  fileprivate var _bundlePath: String? = nil
+  fileprivate var _remote: String? = nil
+  fileprivate var _home: String? = nil
+  fileprivate var _user: String? = nil
+  fileprivate var _defaultPath: String? = nil
+  fileprivate var _jsonMessageRecieved: String? = nil
+  fileprivate var _jsonMessageHandler: String? = nil
+  fileprivate var _protoMessageRecieved: String? = nil
+  fileprivate var _protoMessageHandler: String? = nil
+  fileprivate var _themes: String? = nil
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "fig"
@@ -3970,6 +4122,114 @@ extension Fig_WindowFocusChangedNotification: SwiftProtobuf.Message, SwiftProtob
 
   public static func ==(lhs: Fig_WindowFocusChangedNotification, rhs: Fig_WindowFocusChangedNotification) -> Bool {
     if lhs._window != rhs._window {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Fig_Constants: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Constants"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "version"),
+    2: .same(proto: "build"),
+    3: .same(proto: "cli"),
+    4: .same(proto: "bundlePath"),
+    5: .same(proto: "remote"),
+    6: .same(proto: "home"),
+    7: .same(proto: "user"),
+    8: .same(proto: "defaultPath"),
+    9: .same(proto: "jsonMessageRecieved"),
+    10: .same(proto: "jsonMessageHandler"),
+    11: .same(proto: "protoMessageRecieved"),
+    12: .same(proto: "protoMessageHandler"),
+    13: .same(proto: "themes"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self._version) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self._build) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self._cli) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self._bundlePath) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self._remote) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self._home) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self._user) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self._defaultPath) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self._jsonMessageRecieved) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self._jsonMessageHandler) }()
+      case 11: try { try decoder.decodeSingularStringField(value: &self._protoMessageRecieved) }()
+      case 12: try { try decoder.decodeSingularStringField(value: &self._protoMessageHandler) }()
+      case 13: try { try decoder.decodeSingularStringField(value: &self._themes) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._version {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._build {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._cli {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
+    } }()
+    try { if let v = self._bundlePath {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 4)
+    } }()
+    try { if let v = self._remote {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 5)
+    } }()
+    try { if let v = self._home {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 6)
+    } }()
+    try { if let v = self._user {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 7)
+    } }()
+    try { if let v = self._defaultPath {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 8)
+    } }()
+    try { if let v = self._jsonMessageRecieved {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 9)
+    } }()
+    try { if let v = self._jsonMessageHandler {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 10)
+    } }()
+    try { if let v = self._protoMessageRecieved {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 11)
+    } }()
+    try { if let v = self._protoMessageHandler {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 12)
+    } }()
+    try { if let v = self._themes {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 13)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Fig_Constants, rhs: Fig_Constants) -> Bool {
+    if lhs._version != rhs._version {return false}
+    if lhs._build != rhs._build {return false}
+    if lhs._cli != rhs._cli {return false}
+    if lhs._bundlePath != rhs._bundlePath {return false}
+    if lhs._remote != rhs._remote {return false}
+    if lhs._home != rhs._home {return false}
+    if lhs._user != rhs._user {return false}
+    if lhs._defaultPath != rhs._defaultPath {return false}
+    if lhs._jsonMessageRecieved != rhs._jsonMessageRecieved {return false}
+    if lhs._jsonMessageHandler != rhs._jsonMessageHandler {return false}
+    if lhs._protoMessageRecieved != rhs._protoMessageRecieved {return false}
+    if lhs._protoMessageHandler != rhs._protoMessageHandler {return false}
+    if lhs._themes != rhs._themes {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
