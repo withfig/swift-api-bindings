@@ -244,6 +244,14 @@ public struct Fig_ClientOriginatedMessage {
     set {submessage = .updateApplicationPropertiesRequest(newValue)}
   }
 
+  public var destinationOfSymlinkRequest: Fig_DestinationOfSymlinkRequest {
+    get {
+      if case .destinationOfSymlinkRequest(let v)? = submessage {return v}
+      return Fig_DestinationOfSymlinkRequest()
+    }
+    set {submessage = .destinationOfSymlinkRequest(newValue)}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_Submessage: Equatable {
@@ -258,6 +266,7 @@ public struct Fig_ClientOriginatedMessage {
     case updateSettingsPropertyRequest(Fig_UpdateSettingsPropertyRequest)
     case insertTextRequest(Fig_InsertTextRequest)
     case updateApplicationPropertiesRequest(Fig_UpdateApplicationPropertiesRequest)
+    case destinationOfSymlinkRequest(Fig_DestinationOfSymlinkRequest)
 
   #if !swift(>=4.1)
     public static func ==(lhs: Fig_ClientOriginatedMessage.OneOf_Submessage, rhs: Fig_ClientOriginatedMessage.OneOf_Submessage) -> Bool {
@@ -307,6 +316,10 @@ public struct Fig_ClientOriginatedMessage {
       }()
       case (.updateApplicationPropertiesRequest, .updateApplicationPropertiesRequest): return {
         guard case .updateApplicationPropertiesRequest(let l) = lhs, case .updateApplicationPropertiesRequest(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.destinationOfSymlinkRequest, .destinationOfSymlinkRequest): return {
+        guard case .destinationOfSymlinkRequest(let l) = lhs, case .destinationOfSymlinkRequest(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -393,6 +406,14 @@ public struct Fig_ServerOriginatedMessage {
     set {submessage = .getSettingsPropertyResponse(newValue)}
   }
 
+  public var destinationOfSymlinkResponse: Fig_DestinationOfSymlinkResponse {
+    get {
+      if case .destinationOfSymlinkResponse(let v)? = submessage {return v}
+      return Fig_DestinationOfSymlinkResponse()
+    }
+    set {submessage = .destinationOfSymlinkResponse(newValue)}
+  }
+
   public var notification: Fig_Notification {
     get {
       if case .notification(let v)? = submessage {return v}
@@ -412,6 +433,7 @@ public struct Fig_ServerOriginatedMessage {
     case readFileResponse(Fig_ReadFileResponse)
     case contentsOfDirectoryResponse(Fig_ContentsOfDirectoryResponse)
     case getSettingsPropertyResponse(Fig_GetSettingsPropertyResponse)
+    case destinationOfSymlinkResponse(Fig_DestinationOfSymlinkResponse)
     case notification(Fig_Notification)
 
   #if !swift(>=4.1)
@@ -446,6 +468,10 @@ public struct Fig_ServerOriginatedMessage {
       }()
       case (.getSettingsPropertyResponse, .getSettingsPropertyResponse): return {
         guard case .getSettingsPropertyResponse(let l) = lhs, case .getSettingsPropertyResponse(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.destinationOfSymlinkResponse, .destinationOfSymlinkResponse): return {
+        guard case .destinationOfSymlinkResponse(let l) = lhs, case .destinationOfSymlinkResponse(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.notification, .notification): return {
@@ -1267,6 +1293,48 @@ public struct Fig_ContentsOfDirectoryResponse {
   public init() {}
 }
 
+public struct Fig_DestinationOfSymlinkRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var path: Fig_FilePath {
+    get {return _path ?? Fig_FilePath()}
+    set {_path = newValue}
+  }
+  /// Returns true if `path` has been explicitly set.
+  public var hasPath: Bool {return self._path != nil}
+  /// Clears the value of `path`. Subsequent reads from it will return its default value.
+  public mutating func clearPath() {self._path = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _path: Fig_FilePath? = nil
+}
+
+public struct Fig_DestinationOfSymlinkResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var destination: Fig_FilePath {
+    get {return _destination ?? Fig_FilePath()}
+    set {_destination = newValue}
+  }
+  /// Returns true if `destination` has been explicitly set.
+  public var hasDestination: Bool {return self._destination != nil}
+  /// Clears the value of `destination`. Subsequent reads from it will return its default value.
+  public mutating func clearDestination() {self._destination = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _destination: Fig_FilePath? = nil
+}
+
 public struct Fig_GetSettingsPropertyRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1941,6 +2009,7 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     109: .standard(proto: "update_settings_property_request"),
     110: .standard(proto: "insert_text_request"),
     111: .standard(proto: "update_application_properties_request"),
+    112: .standard(proto: "destination_of_symlink_request"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2093,6 +2162,19 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
           self.submessage = .updateApplicationPropertiesRequest(v)
         }
       }()
+      case 112: try {
+        var v: Fig_DestinationOfSymlinkRequest?
+        var hadOneofValue = false
+        if let current = self.submessage {
+          hadOneofValue = true
+          if case .destinationOfSymlinkRequest(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.submessage = .destinationOfSymlinkRequest(v)
+        }
+      }()
       default: break
       }
     }
@@ -2151,6 +2233,10 @@ extension Fig_ClientOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
       guard case .updateApplicationPropertiesRequest(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 111)
     }()
+    case .destinationOfSymlinkRequest?: try {
+      guard case .destinationOfSymlinkRequest(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 112)
+    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -2175,6 +2261,7 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     102: .standard(proto: "read_file_response"),
     103: .standard(proto: "contents_of_directory_response"),
     104: .standard(proto: "get_settings_property_response"),
+    105: .standard(proto: "destination_of_symlink_response"),
     1000: .same(proto: "notification"),
   ]
 
@@ -2266,6 +2353,19 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
           self.submessage = .getSettingsPropertyResponse(v)
         }
       }()
+      case 105: try {
+        var v: Fig_DestinationOfSymlinkResponse?
+        var hadOneofValue = false
+        if let current = self.submessage {
+          hadOneofValue = true
+          if case .destinationOfSymlinkResponse(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.submessage = .destinationOfSymlinkResponse(v)
+        }
+      }()
       case 1000: try {
         var v: Fig_Notification?
         var hadOneofValue = false
@@ -2320,6 +2420,10 @@ extension Fig_ServerOriginatedMessage: SwiftProtobuf.Message, SwiftProtobuf._Mes
     case .getSettingsPropertyResponse?: try {
       guard case .getSettingsPropertyResponse(let v)? = self.submessage else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 104)
+    }()
+    case .destinationOfSymlinkResponse?: try {
+      guard case .destinationOfSymlinkResponse(let v)? = self.submessage else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 105)
     }()
     case .notification?: try {
       guard case .notification(let v)? = self.submessage else { preconditionFailure() }
@@ -3464,6 +3568,78 @@ extension Fig_ContentsOfDirectoryResponse: SwiftProtobuf.Message, SwiftProtobuf.
 
   public static func ==(lhs: Fig_ContentsOfDirectoryResponse, rhs: Fig_ContentsOfDirectoryResponse) -> Bool {
     if lhs.fileNames != rhs.fileNames {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Fig_DestinationOfSymlinkRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DestinationOfSymlinkRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "path"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._path) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._path {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Fig_DestinationOfSymlinkRequest, rhs: Fig_DestinationOfSymlinkRequest) -> Bool {
+    if lhs._path != rhs._path {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Fig_DestinationOfSymlinkResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DestinationOfSymlinkResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "destination"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._destination) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._destination {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Fig_DestinationOfSymlinkResponse, rhs: Fig_DestinationOfSymlinkResponse) -> Bool {
+    if lhs._destination != rhs._destination {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
