@@ -76,6 +76,60 @@ extension Fig_Modifiers: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+public enum Fig_ActionAvailability: SwiftProtobuf.Enum {
+  public typealias RawValue = Int
+  case always // = 0
+
+  /// the action can only be performed when the app has keyboard focus
+  case whenFocused // = 1
+
+  /// the action can only be performed when the app is visible
+  case whenVisible // = 2
+
+  /// the action can only be performed when the app is hidden
+  case whenHidden // = 3
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .always
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .always
+    case 1: self = .whenFocused
+    case 2: self = .whenVisible
+    case 3: self = .whenHidden
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .always: return 0
+    case .whenFocused: return 1
+    case .whenVisible: return 2
+    case .whenHidden: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension Fig_ActionAvailability: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static var allCases: [Fig_ActionAvailability] = [
+    .always,
+    .whenFocused,
+    .whenVisible,
+    .whenHidden,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 public enum Fig_NotificationType: SwiftProtobuf.Enum {
   public typealias RawValue = Int
   case all // = 0
@@ -1418,6 +1472,71 @@ public struct Fig_UpdateSettingsPropertyRequest {
   fileprivate var _value: String? = nil
 }
 
+public struct Fig_Action {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// unique identifier for the action; not user facing.
+  public var identifier: String {
+    get {return _identifier ?? String()}
+    set {_identifier = newValue}
+  }
+  /// Returns true if `identifier` has been explicitly set.
+  public var hasIdentifier: Bool {return self._identifier != nil}
+  /// Clears the value of `identifier`. Subsequent reads from it will return its default value.
+  public mutating func clearIdentifier() {self._identifier = nil}
+
+  /// name of action, will appear in user interfaces.
+  public var name: String {
+    get {return _name ?? String()}
+    set {_name = newValue}
+  }
+  /// Returns true if `name` has been explicitly set.
+  public var hasName: Bool {return self._name != nil}
+  /// Clears the value of `name`. Subsequent reads from it will return its default value.
+  public mutating func clearName() {self._name = nil}
+
+  /// a quick summary of what the action will do
+  public var description_p: String {
+    get {return _description_p ?? String()}
+    set {_description_p = newValue}
+  }
+  /// Returns true if `description_p` has been explicitly set.
+  public var hasDescription_p: Bool {return self._description_p != nil}
+  /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
+  public mutating func clearDescription_p() {self._description_p = nil}
+
+  public var category: String {
+    get {return _category ?? String()}
+    set {_category = newValue}
+  }
+  /// Returns true if `category` has been explicitly set.
+  public var hasCategory: Bool {return self._category != nil}
+  /// Clears the value of `category`. Subsequent reads from it will return its default value.
+  public mutating func clearCategory() {self._category = nil}
+
+  /// when can this action be performed
+  public var availability: Fig_ActionAvailability {
+    get {return _availability ?? .always}
+    set {_availability = newValue}
+  }
+  /// Returns true if `availability` has been explicitly set.
+  public var hasAvailability: Bool {return self._availability != nil}
+  /// Clears the value of `availability`. Subsequent reads from it will return its default value.
+  public mutating func clearAvailability() {self._availability = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _identifier: String? = nil
+  fileprivate var _name: String? = nil
+  fileprivate var _description_p: String? = nil
+  fileprivate var _category: String? = nil
+  fileprivate var _availability: Fig_ActionAvailability? = nil
+}
+
 public struct Fig_UpdateApplicationPropertiesRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1432,11 +1551,21 @@ public struct Fig_UpdateApplicationPropertiesRequest {
   /// Clears the value of `interceptBoundKeystrokes`. Subsequent reads from it will return its default value.
   public mutating func clearInterceptBoundKeystrokes() {self._interceptBoundKeystrokes = nil}
 
+  public var actions: Fig_Action {
+    get {return _actions ?? Fig_Action()}
+    set {_actions = newValue}
+  }
+  /// Returns true if `actions` has been explicitly set.
+  public var hasActions: Bool {return self._actions != nil}
+  /// Clears the value of `actions`. Subsequent reads from it will return its default value.
+  public mutating func clearActions() {self._actions = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _interceptBoundKeystrokes: Bool? = nil
+  fileprivate var _actions: Fig_Action? = nil
 }
 
 public struct Fig_NotificationRequest {
@@ -1978,6 +2107,15 @@ extension Fig_Modifiers: SwiftProtobuf._ProtoNameProviding {
     3: .same(proto: "SHIFT"),
     4: .same(proto: "FUNCTION"),
     5: .same(proto: "NUMPAD"),
+  ]
+}
+
+extension Fig_ActionAvailability: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "ALWAYS"),
+    1: .same(proto: "WHEN_FOCUSED"),
+    2: .same(proto: "WHEN_VISIBLE"),
+    3: .same(proto: "WHEN_HIDDEN"),
   ]
 }
 
@@ -3765,10 +3903,71 @@ extension Fig_UpdateSettingsPropertyRequest: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
+extension Fig_Action: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Action"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "identifier"),
+    2: .same(proto: "name"),
+    3: .same(proto: "description"),
+    4: .same(proto: "category"),
+    5: .same(proto: "availability"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self._identifier) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self._name) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self._description_p) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self._category) }()
+      case 5: try { try decoder.decodeSingularEnumField(value: &self._availability) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._identifier {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._name {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._description_p {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
+    } }()
+    try { if let v = self._category {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 4)
+    } }()
+    try { if let v = self._availability {
+      try visitor.visitSingularEnumField(value: v, fieldNumber: 5)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Fig_Action, rhs: Fig_Action) -> Bool {
+    if lhs._identifier != rhs._identifier {return false}
+    if lhs._name != rhs._name {return false}
+    if lhs._description_p != rhs._description_p {return false}
+    if lhs._category != rhs._category {return false}
+    if lhs._availability != rhs._availability {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Fig_UpdateApplicationPropertiesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateApplicationPropertiesRequest"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "interceptBoundKeystrokes"),
+    2: .same(proto: "actions"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3778,6 +3977,7 @@ extension Fig_UpdateApplicationPropertiesRequest: SwiftProtobuf.Message, SwiftPr
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularBoolField(value: &self._interceptBoundKeystrokes) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._actions) }()
       default: break
       }
     }
@@ -3791,11 +3991,15 @@ extension Fig_UpdateApplicationPropertiesRequest: SwiftProtobuf.Message, SwiftPr
     try { if let v = self._interceptBoundKeystrokes {
       try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
     } }()
+    try { if let v = self._actions {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Fig_UpdateApplicationPropertiesRequest, rhs: Fig_UpdateApplicationPropertiesRequest) -> Bool {
     if lhs._interceptBoundKeystrokes != rhs._interceptBoundKeystrokes {return false}
+    if lhs._actions != rhs._actions {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
