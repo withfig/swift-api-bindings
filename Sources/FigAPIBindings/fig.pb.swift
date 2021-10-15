@@ -1551,21 +1551,13 @@ public struct Fig_UpdateApplicationPropertiesRequest {
   /// Clears the value of `interceptBoundKeystrokes`. Subsequent reads from it will return its default value.
   public mutating func clearInterceptBoundKeystrokes() {self._interceptBoundKeystrokes = nil}
 
-  public var actions: Fig_Action {
-    get {return _actions ?? Fig_Action()}
-    set {_actions = newValue}
-  }
-  /// Returns true if `actions` has been explicitly set.
-  public var hasActions: Bool {return self._actions != nil}
-  /// Clears the value of `actions`. Subsequent reads from it will return its default value.
-  public mutating func clearActions() {self._actions = nil}
+  public var actions: [Fig_Action] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _interceptBoundKeystrokes: Bool? = nil
-  fileprivate var _actions: Fig_Action? = nil
 }
 
 public struct Fig_NotificationRequest {
@@ -3977,7 +3969,7 @@ extension Fig_UpdateApplicationPropertiesRequest: SwiftProtobuf.Message, SwiftPr
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularBoolField(value: &self._interceptBoundKeystrokes) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._actions) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.actions) }()
       default: break
       }
     }
@@ -3991,15 +3983,15 @@ extension Fig_UpdateApplicationPropertiesRequest: SwiftProtobuf.Message, SwiftPr
     try { if let v = self._interceptBoundKeystrokes {
       try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
     } }()
-    try { if let v = self._actions {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
+    if !self.actions.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.actions, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Fig_UpdateApplicationPropertiesRequest, rhs: Fig_UpdateApplicationPropertiesRequest) -> Bool {
     if lhs._interceptBoundKeystrokes != rhs._interceptBoundKeystrokes {return false}
-    if lhs._actions != rhs._actions {return false}
+    if lhs.actions != rhs.actions {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
